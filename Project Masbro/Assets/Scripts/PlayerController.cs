@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private int groundContacts = 0;
     private bool isGrounded = false;
     private Rigidbody2D rb;
+    private int jumpCount = 0;
+    [SerializeField] private int maxJump = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -38,13 +40,23 @@ public class PlayerController : MonoBehaviour
         Vector2 velocity = rb.linearVelocity;
         velocity.x = horizontalInput * currentSpeed;
 
-        if (jumpPressed && isGrounded && isRunning && (velocity.x > movSpeed || velocity.x < -movSpeed))
+        // Double Jump Logic
+        if (isGrounded)
         {
-            velocity.y = runJumpForce;
+            jumpCount = 0;
         }
-        else if (jumpPressed && isGrounded)
+
+        if (jumpPressed && jumpCount < maxJump)
         {
-            velocity.y = normalJumpForce;
+            if (isRunning && isGrounded && (velocity.x > movSpeed || velocity.x < -movSpeed))
+            {
+                velocity.y = runJumpForce;
+            }
+            else
+            {
+                velocity.y = normalJumpForce;
+            }
+            jumpCount++;
         }
 
         rb.linearVelocity = velocity;
