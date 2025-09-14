@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 023f261ba2c870c4a8c2d6cd0f7fae28
+guid: b9c0ba2441cb6514a9ee6be8b5787c31
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5177388603050735206
-    second: 9-Sliced
+      213: 7482667652216324306
+    second: Square
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,15 +48,15 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 256
-  spriteBorder: {x: 64, y: 64, z: 64, w: 64}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
+  spriteTessellationDetail: 0
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -97,7 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
+    buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -110,7 +110,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: iOS
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -139,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 9-Sliced
+      name: Square
       rect:
         serializedVersion: 2
         x: 0
@@ -148,34 +148,14 @@ TextureImporter:
         height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 64, y: 64, z: 64, w: 64}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape:
-      - - {x: 126, y: 73}
-        - {x: 120, y: 92}
-        - {x: 108, y: 108}
-        - {x: 92, y: 120}
-        - {x: 73, y: 126}
-        - {x: -73, y: 126}
-        - {x: -92, y: 120}
-        - {x: -108, y: 108}
-        - {x: -120, y: 92}
-        - {x: -126, y: 73}
-        - {x: -126, y: -73}
-        - {x: -120, y: -92}
-        - {x: -108, y: -108}
-        - {x: -92, y: -120}
-        - {x: -73, y: -126}
-        - {x: 73, y: -126}
-        - {x: 92, y: -120}
-        - {x: 108, y: -108}
-        - {x: 120, y: -92}
-        - {x: 126, y: -73}
-      tessellationDetail: 0.2
+      physicsShape: []
+      tessellationDetail: 0
       bones: []
-      spriteID: a99410b1f783628b0800000000000000
-      internalID: -5177388603050735206
+      spriteID: 2d009a6b596c7d760800000000000000
+      internalID: 7482667652216324306
       vertices: []
       indices: 
       edges: []
@@ -183,26 +163,10 @@ TextureImporter:
     outline: []
     customData: 
     physicsShape:
-    - - {x: 126, y: 73}
-      - {x: 120, y: 92}
-      - {x: 108, y: 108}
-      - {x: 92, y: 120}
-      - {x: 73, y: 126}
-      - {x: -73, y: 126}
-      - {x: -92, y: 120}
-      - {x: -108, y: 108}
-      - {x: -120, y: 92}
-      - {x: -126, y: 73}
-      - {x: -126, y: -73}
-      - {x: -120, y: -92}
-      - {x: -108, y: -108}
-      - {x: -92, y: -120}
-      - {x: -73, y: -126}
-      - {x: 73, y: -126}
-      - {x: 92, y: -120}
-      - {x: 108, y: -108}
-      - {x: 120, y: -92}
-      - {x: 126, y: -73}
+    - - {x: -128, y: 128}
+      - {x: -128, y: -128}
+      - {x: 128, y: -128}
+      - {x: 128, y: 128}
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
@@ -214,7 +178,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      9-Sliced: -5177388603050735206
+      Square: 7482667652216324306
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
