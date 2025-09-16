@@ -237,6 +237,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obstacle
       objectReference: {fileID: 0}
+    - target: {fileID: 4247477441648079829, guid: 213568bac2c79ca4a9c4dff75a20adde, type: 3}
+      propertyPath: m_TagString
+      value: Object
+      objectReference: {fileID: 0}
     - target: {fileID: 8634501910896027894, guid: 213568bac2c79ca4a9c4dff75a20adde, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.2293
