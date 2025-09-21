@@ -163,7 +163,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &6415549101160725385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,6 +181,7 @@ MonoBehaviour:
   airSpeed: 4
   normalJumpForce: 5
   runJumpForce: 8
+  maxJump: 1
   standingCollider: {fileID: 770037990627433767}
   crouchingCollider: {fileID: 3853927636833874304}
 --- !u!61 &3853927636833874304
