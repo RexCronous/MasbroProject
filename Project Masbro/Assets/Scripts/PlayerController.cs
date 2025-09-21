@@ -13,10 +13,14 @@ public class PlayerController : MonoBehaviour
 
     public BoxCollider2D standingCollider;
     public BoxCollider2D crouchingCollider;
+    public BoxCollider2D leftCollider;
+    public BoxCollider2D rightCollider;
     private int groundContacts = 0;
     private bool isGrounded = false;
     private Rigidbody2D rb;
     private int jumpCount = 0;
+    private bool touchingLeftWall = false;
+    private bool touchingRightWall = false;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +42,19 @@ public class PlayerController : MonoBehaviour
 
         // Update Velocity
         Vector2 velocity = rb.linearVelocity;
-        velocity.x = horizontalInput * currentSpeed;
+
+        if (touchingLeftWall && horizontalInput < 0)
+        {
+            velocity.x = 0; // prevent moving left into wall
+        }
+        else if (touchingRightWall && horizontalInput > 0)
+        {
+            velocity.x = 0; // prevent moving right into wall
+        }
+        else
+        {
+            velocity.x = horizontalInput * currentSpeed;
+        }
 
         // Double Jump Logic
         if (isGrounded)
@@ -60,6 +76,11 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.linearVelocity = velocity;
+
+        // if (rb.linearVelocityY == 0)
+        // {
+        //     rb.linearVelocityX = 0;
+        // }
 
         // Mekanik Crouching
         // Mengaktifkan collider "berdiri" saat tidak crouch, dan collider "crouch" saat crouching
@@ -84,8 +105,29 @@ public class PlayerController : MonoBehaviour
             if (groundContacts <= 0)
             {
                 isGrounded = false;
-                groundContacts = 0; // just in case
+                groundContacts = 0;
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Wall"))
+        {
+            // Check which side the wall is
+            if (other.bounds.center.x < transform.position.x)
+                touchingLeftWall = true;
+            else
+                touchingRightWall = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Wall"))
+        {
+            touchingLeftWall = false;
+            touchingRightWall = false;
         }
     }
 }
