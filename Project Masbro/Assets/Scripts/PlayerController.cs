@@ -16,11 +16,11 @@ public class PlayerController : MonoBehaviour
     public BoxCollider2D leftCollider;
     public BoxCollider2D rightCollider;
     private int groundContacts = 0;
-    private bool isGrounded = false;
+    public bool isGrounded = false;
     private Rigidbody2D rb;
     private int jumpCount = 0;
-    private bool touchingLeftWall = false;
-    private bool touchingRightWall = false;
+    public bool touchingLeftWall = false;
+    public bool touchingRightWall = false;
 
     // Start is called before the first frame update
     void Start()
@@ -90,11 +90,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Object"))
+        // if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Object"))
+        if (other.gameObject.transform.position.y < transform.position.y)
         {
             groundContacts++;
             isGrounded = true;
         }
+        if (other.gameObject.transform.position.x < transform.position.x)
+            touchingLeftWall = true;
+        else
+            touchingRightWall = true;
     }
 
     private void OnCollisionExit2D(Collision2D other)
@@ -108,26 +113,45 @@ public class PlayerController : MonoBehaviour
                 groundContacts = 0;
             }
         }
+
+        touchingLeftWall = false;
+        touchingRightWall = false;
     }
+
+    // private void OnTriggerEnter2D(Collider other)
+    // {
+    //     if (other.CompareTag("WallOnGround"))
+    //     {
+    //         if (other.bounds.center.x < transform.position.x)
+    //             touchingLeftWall = true;
+    //         else
+    //             touchingRightWall = true;
+    //     }
+    // }
+
+    // private void OnTriggerExit2D(Collider2D other)
+    // {
+    //     if (other.CompareTag("WallOnGround"))
+    //     {
+    //         touchingLeftWall = false;
+    //         touchingRightWall = false;
+    //     }
+    // }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Wall"))
-        {
-            // Check which side the wall is
-            if (other.bounds.center.x < transform.position.x)
-                touchingLeftWall = true;
-            else
-                touchingRightWall = true;
-        }
+        // if (other.CompareTag("Wall") || other.CompareTag("Ground"))
+        // {
+        // Check which side the wall is
+
+        // }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Wall"))
-        {
-            touchingLeftWall = false;
-            touchingRightWall = false;
-        }
+        // if (other.CompareTag("Wall") || other.CompareTag("Ground"))
+        // {
+
+        // }
     }
 }
