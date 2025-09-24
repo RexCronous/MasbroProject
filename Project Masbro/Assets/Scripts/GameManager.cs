@@ -1,0 +1,60 @@
+using System.Threading.Tasks;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager Instance;
+    public SpawnSystem spawnSystem;
+    public int maxLives = 3;
+    public int lives;
+    public int respawnDelay = 1; // in seconds
+    public bool isAtCheckpoint = false;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        lives = maxLives;
+        spawnSystem.SpawnAtStart();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public async void Respawn()
+    {
+        await Task.Delay(respawnDelay * 1000); // Convert seconds to milliseconds
+
+        if (lives > 0)
+        {
+            lives--;
+            if (isAtCheckpoint)
+            {
+                spawnSystem.SpawnAtCheckpoint();
+            }
+            else
+            {
+                spawnSystem.SpawnAtStart();
+            }
+        }
+        else
+        {
+            isAtCheckpoint = false;
+            lives = maxLives;
+
+            spawnSystem.SpawnAtStart();
+        }
+    }
+}
