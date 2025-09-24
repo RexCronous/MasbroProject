@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3853927636833874304}
   m_Layer: 0
   m_Name: MasbroLite
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,6 +136,7 @@ MonoBehaviour:
   normalJumpForce: 5
   runJumpForce: 8
   maxJump: 1
+  spawnPoint: {fileID: 1802889866142633710, guid: b9931701d818af84e91bbc442bc98346, type: 3}
   standingCollider: {fileID: 770037990627433767}
   crouchingCollider: {fileID: 3853927636833874304}
   leftCollider: {fileID: 0}

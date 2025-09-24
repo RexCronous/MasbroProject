@@ -2,19 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowPlayer : MonoBehaviour
+public class CameraMovement : MonoBehaviour
 {
-    public GameObject player;
-    private Vector3 offset = new Vector3(0, 0.65f, -1f);
-    // Start is called before the first frame update
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private GameObject target;
     void Start()
     {
 
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void Update()
     {
-        transform.position = player.transform.position + offset;
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player");
+            if (target == null) return;
+        }
+
+        transform.position = new Vector3(target.transform.position.x, transform.position.y, -10);
     }
 }
