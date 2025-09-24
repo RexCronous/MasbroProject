@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float runJumpForce = 8.0f;
     [SerializeField] private int maxJump = 1;
 
+    public GameObject spawnPoint;
     public BoxCollider2D standingCollider;
     public BoxCollider2D crouchingCollider;
     public BoxCollider2D leftCollider;
@@ -119,6 +120,12 @@ public class PlayerController : MonoBehaviour
                 touchingLeftWall = true;
             else
                 touchingRightWall = true;
+        }
+
+        if (other.gameObject.CompareTag("Death"))
+        {
+            Destroy(gameObject);
+            SpawnSystem.instance.Respawn();
         }
     }
 
