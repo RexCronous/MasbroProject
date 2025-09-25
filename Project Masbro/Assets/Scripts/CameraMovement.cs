@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
@@ -12,6 +14,12 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(target.transform.position.x, transform.position.y, -10);
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player");
+            if (target == null) return;
+        }
+
+        transform.position = new Vector3(target.transform.position.x, target.transform.position.y, -10);
     }
 }
