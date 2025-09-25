@@ -41,13 +41,13 @@ public class PlayerController : MonoBehaviour
         // Update Velocity
         Vector2 velocity = rb.linearVelocity;
 
-        if (touchingLeftWall && horizontalInput < 0)
-        {
-            velocity.x = 0; // prevent moving left into wall
-        }
-        else if (touchingRightWall && horizontalInput > 0)
+        if (touchingLeftWall && horizontalInput > 0)
         {
             velocity.x = 0; // prevent moving right into wall
+        }
+        else if (touchingRightWall && horizontalInput < 0)
+        {
+            velocity.x = 0; // prevent moving left into wall
         }
         else
         {
@@ -100,19 +100,36 @@ public class PlayerController : MonoBehaviour
                 isGrounded = false;
                 groundContacts = 0;
             }
+
+            touchingLeftWall = false;
+            touchingRightWall = false;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                if (contact.normal.x > 0.5f)
+                    touchingRightWall = true;
+                else if (contact.normal.x < -0.5f)
+                    touchingLeftWall = true;
+            }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Wall"))
-        {
-            // Check which side the wall is
-            if (other.bounds.center.x < transform.position.x)
-                touchingLeftWall = true;
-            else
-                touchingRightWall = true;
-        }
+        // if (other.CompareTag("Wall"))
+        // {
+        //     // Check which side the wall is
+        //     if (other.bounds.center.x < transform.position.x)
+        //         touchingLeftWall = true;
+        //     else
+        //         touchingRightWall = true;
+        // }
 
         // Reaching checkpoint
         if (other.gameObject.CompareTag("Checkpoint"))
@@ -128,12 +145,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Wall"))
-        {
-            touchingLeftWall = false;
-            touchingRightWall = false;
-        }
-    }
+    // private void OnTriggerExit2D(Collider2D other)
+    // {
+    //     if (other.CompareTag("Wall"))
+    //     {
+    //         touchingLeftWall = false;
+    //         touchingRightWall = false;
+    //     }
+    // }
 }
