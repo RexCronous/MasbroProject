@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,16 +7,12 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float movSpeed = 10.0f;
     [SerializeField] private float runSpeed = 20.0f;
-    [SerializeField] private float airSpeed = 4.0f;
+    // [SerializeField] private float airSpeed = 4.0f;
     [SerializeField] private float normalJumpForce = 5.0f;
     [SerializeField] private float runJumpForce = 8.0f;
     [SerializeField] private int maxJump = 1;
-
-    public GameObject spawnPoint;
-    public BoxCollider2D standingCollider;
-    public BoxCollider2D crouchingCollider;
-    public BoxCollider2D leftCollider;
-    public BoxCollider2D rightCollider;
+    [SerializeField] private BoxCollider2D standingCollider;
+    [SerializeField] private BoxCollider2D crouchingCollider;
     private int groundContacts = 0;
     private bool isGrounded = false;
     private Rigidbody2D rb;
@@ -65,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
         if (jumpPressed && jumpCount < maxJump)
         {
-            if (isRunning && isGrounded && (velocity.x > movSpeed || velocity.x < -movSpeed))
+            if (isRunning && isGrounded && (velocity.x > Math.Abs(movSpeed)))
             {
                 velocity.y = runJumpForce;
             }
@@ -77,11 +74,6 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.linearVelocity = velocity;
-
-        // if (rb.linearVelocityY == 0)
-        // {
-        //     rb.linearVelocityX = 0;
-        // }
 
         // Mekanik Crouching
         // Mengaktifkan collider "berdiri" saat tidak crouch, dan collider "crouch" saat crouching
@@ -122,10 +114,17 @@ public class PlayerController : MonoBehaviour
                 touchingRightWall = true;
         }
 
+        // Reaching checkpoint
+        if (other.gameObject.CompareTag("Checkpoint"))
+        {
+            GameManager.Instance.isAtCheckpoint = true;
+        }
+
+        // Spawn System
         if (other.gameObject.CompareTag("Death"))
         {
             Destroy(gameObject);
-            SpawnSystem.instance.Respawn();
+            GameManager.Instance.Respawn();
         }
     }
 

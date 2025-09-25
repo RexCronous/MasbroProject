@@ -2,34 +2,22 @@ using UnityEngine;
 
 public class SpawnSystem : MonoBehaviour
 {
-    public static SpawnSystem instance;
-    public GameObject objectPrefab;
-    public Transform spawnPoint;
-    public int lives = 3;
+    public GameObject playerPrefab;
+    public Transform startingPosition;
+    public Transform checkpointPosition;
 
-    private void Awake()
+    public void SpawnAtStart()
     {
-        instance = this;
+        SpawnPlayer(startingPosition);
     }
 
-    private void Start()
+    public void SpawnAtCheckpoint()
     {
-        SpawnPlayer();
+        SpawnPlayer(checkpointPosition);
     }
 
-    private void SpawnPlayer()
+    private void SpawnPlayer(Transform spawnPoint)
     {
-        if (lives <= 0) return;
-
-        Instantiate(objectPrefab, spawnPoint.position, spawnPoint.rotation);
-    }
-
-    public void Respawn()
-    {
-        if (lives > 0)
-        {
-            Invoke(nameof(SpawnPlayer), 1.0f);
-            lives--;
-        }
+        Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 }
