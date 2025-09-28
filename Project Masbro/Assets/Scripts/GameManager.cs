@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     {
         await Task.Delay(respawnDelay * 1000); // Convert seconds to milliseconds
 
-        if (lives > 0)
+        if (lives > 1)
         {
             lives--;
             if (isAtCheckpoint)
@@ -49,11 +49,10 @@ public class GameManager : MonoBehaviour
                 spawnSystem.SpawnAtStart();
             }
         }
-        else
+        else // lives == 0
         {
             isAtCheckpoint = false;
             lives = maxLives;
-
             spawnSystem.SpawnAtStart();
         }
     }
