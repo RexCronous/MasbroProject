@@ -132,15 +132,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movSpeed: 10
   runSpeed: 15
-  airSpeed: 4
   normalJumpForce: 5
   runJumpForce: 8
   maxJump: 1
-  spawnPoint: {fileID: 1802889866142633710, guid: b9931701d818af84e91bbc442bc98346, type: 3}
   standingCollider: {fileID: 770037990627433767}
   crouchingCollider: {fileID: 3853927636833874304}
-  leftCollider: {fileID: 0}
-  rightCollider: {fileID: 0}
 --- !u!61 &770037990627433767
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -151,7 +147,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 7993db34a95834a9492ade71f417bbfc, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -197,7 +193,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 7993db34a95834a9492ade71f417bbfc, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

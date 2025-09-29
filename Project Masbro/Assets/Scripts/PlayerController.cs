@@ -118,6 +118,28 @@ public class PlayerController : MonoBehaviour
                     touchingLeftWall = true;
             }
         }
+        
+        if (collision.gameObject.CompareTag("Object"))
+        {
+            Rigidbody2D boxRb = collision.gameObject.GetComponent<Rigidbody2D>();
+            if (boxRb != null)
+            {
+                foreach (ContactPoint2D contact in collision.contacts)
+                {
+                    // Cek arah normal tabrakan
+                    // Normal ke atas (y > 0.5) artinya player di atas box → jangan dorong
+                    if (contact.normal.y > 0.5f)
+                    {
+                        return; // keluar, tidak dorong
+                    }
+                }
+
+                // Kalau bukan di atas (berarti di samping), baru dorong
+                float pushPower = 0.5f; // kecil = berat
+                Vector2 pushDir = new Vector2(rb.linearVelocity.x, 0);
+                boxRb.linearVelocity = new Vector2(pushDir.x * pushPower, boxRb.linearVelocity.y);
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
