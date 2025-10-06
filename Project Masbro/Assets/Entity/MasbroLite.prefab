@@ -106,7 +106,7 @@ Rigidbody2D:
   m_Mass: 8
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -132,8 +132,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movSpeed: 10
   runSpeed: 15
-  normalJumpForce: 5
-  runJumpForce: 8
+  normalJumpForce: 10
+  runJumpForce: 13
   maxJump: 1
   standingCollider: {fileID: 770037990627433767}
   crouchingCollider: {fileID: 3853927636833874304}

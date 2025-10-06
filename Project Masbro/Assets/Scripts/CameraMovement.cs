@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    public GameObject groundZero;
+    private GameObject target;
+    private Vector3 targetPos;
+    private float playerXPos;
+    private float playerYPos;
+    private float offsetY = 4f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public GameObject target;
     void Start()
     {
 
+        
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (target == null)
         {
@@ -20,6 +27,11 @@ public class CameraMovement : MonoBehaviour
             if (target == null) return;
         }
 
-        transform.position = new Vector3(target.transform.position.x, target.transform.position.y, -10);
+        playerXPos = target.transform.position.x;
+        playerYPos = target.transform.position.y;
+
+        targetPos = new Vector3(playerXPos, Mathf.Clamp(playerYPos, groundZero.transform.position.y + offsetY, 100), -10);
+
+        transform.position = targetPos;
     }
 }

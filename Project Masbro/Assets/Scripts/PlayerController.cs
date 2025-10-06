@@ -7,16 +7,17 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float movSpeed = 10.0f;
     [SerializeField] private float runSpeed = 20.0f;
-    // [SerializeField] private float airSpeed = 4.0f;
+    // [SerializeField] private float airTime = 0f;
     [SerializeField] private float normalJumpForce = 5.0f;
     [SerializeField] private float runJumpForce = 8.0f;
     [SerializeField] private int maxJump = 1;
     [SerializeField] private BoxCollider2D standingCollider;
     [SerializeField] private BoxCollider2D crouchingCollider;
     private int groundContacts = 0;
-    private bool isGrounded = false;
     private Rigidbody2D rb;
     private int jumpCount = 0;
+    private bool isGrounded = false;
+    private bool runBeforeJump = false;
     private bool touchingLeftWall = false;
     private bool touchingRightWall = false;
 
@@ -35,8 +36,31 @@ public class PlayerController : MonoBehaviour
         bool isCrouching = Input.GetKey(KeyCode.C);
         bool jumpPressed = Input.GetButtonDown("Jump");
 
-        // Speed Modifier
-        float currentSpeed = isRunning ? runSpeed : movSpeed;
+        // Mengecek apakah player sedang di tanah (grounded)
+        if (isGrounded)
+        {
+            // Simpan status apakah player sedang berlari sebelum melakukan lompatan
+            runBeforeJump = isRunning;
+        }
+        
+        // Speed modifier
+        float currentSpeed = 0f;
+
+        // Menentukan kecepatan berdasarkan kondisi grounded atau tidak
+        if (isGrounded)
+        {
+            // Jika player masih menyentuh tanah:
+            // Gunakan kecepatan sesuai input saat ini (running atau normal)
+            currentSpeed = isRunning ? runSpeed : movSpeed;
+        }
+        else
+        {
+            // Jika player sedang di udara:
+            // Gunakan kecepatan berdasarkan status sebelum melompat
+            // (tidak bisa mengubah dari jalan ke lari di udara)
+            currentSpeed = runBeforeJump ? runSpeed : movSpeed;
+        }
+
 
         // Update Velocity
         Vector2 velocity = rb.linearVelocity;
@@ -62,15 +86,22 @@ public class PlayerController : MonoBehaviour
 
         if (jumpPressed && jumpCount < maxJump)
         {
-            if (isRunning && isGrounded && (velocity.x > Math.Abs(movSpeed)))
+            if (jumpCount == 0)
             {
-                velocity.y = runJumpForce;
+                velocity.y = isRunning && (Mathf.Abs(velocity.x) > movSpeed) ? runJumpForce : normalJumpForce;
             }
-            else
+            else if (jumpCount > 0 && !isGrounded)
             {
                 velocity.y = normalJumpForce;
             }
             jumpCount++;
+        }
+
+        // Sedikit mengurangi kecepatan horizontal saat lari lalu melompat
+        if (!isGrounded && Mathf.Abs(velocity.x) > movSpeed)
+        {
+            float targetSpeed = Mathf.Sign(velocity.x) * movSpeed;
+            velocity.x = Mathf.Lerp(velocity.x, targetSpeed, Time.deltaTime * 50f);
         }
 
         rb.linearVelocity = velocity;
@@ -79,6 +110,11 @@ public class PlayerController : MonoBehaviour
         // Mengaktifkan collider "berdiri" saat tidak crouch, dan collider "crouch" saat crouching
         standingCollider.enabled = !isCrouching;
         crouchingCollider.enabled = isCrouching;
+    }
+
+    private void jump()
+    {
+        
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -113,9 +149,13 @@ public class PlayerController : MonoBehaviour
             foreach (ContactPoint2D contact in collision.contacts)
             {
                 if (contact.normal.x > 0.5f)
+                {
                     touchingRightWall = true;
+                }
                 else if (contact.normal.x < -0.5f)
+                {
                     touchingLeftWall = true;
+                }
             }
         }
         
@@ -144,15 +184,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // if (other.CompareTag("Wall"))
-        // {
-        //     // Check which side the wall is
-        //     if (other.bounds.center.x < transform.position.x)
-        //         touchingLeftWall = true;
-        //     else
-        //         touchingRightWall = true;
-        // }
-
         // Reaching checkpoint
         if (other.gameObject.CompareTag("Checkpoint"))
         {
@@ -166,13 +197,4 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.Respawn();
         }
     }
-
-    // private void OnTriggerExit2D(Collider2D other)
-    // {
-    //     if (other.CompareTag("Wall"))
-    //     {
-    //         touchingLeftWall = false;
-    //         touchingRightWall = false;
-    //     }
-    // }
 }
