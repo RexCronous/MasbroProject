@@ -134,7 +134,7 @@ MonoBehaviour:
   runSpeed: 15
   normalJumpForce: 10
   runJumpForce: 13
-  maxJump: 1
+  maxJump: 2
   standingCollider: {fileID: 770037990627433767}
   crouchingCollider: {fileID: 3853927636833874304}
 --- !u!61 &770037990627433767

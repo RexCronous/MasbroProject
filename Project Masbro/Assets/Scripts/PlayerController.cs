@@ -110,37 +110,23 @@ public class PlayerController : MonoBehaviour
         // Mengaktifkan collider "berdiri" saat tidak crouch, dan collider "crouch" saat crouching
         standingCollider.enabled = !isCrouching;
         crouchingCollider.enabled = isCrouching;
-    }
-
-    private void jump()
-    {
         
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Object"))
+        if (rb.linearVelocity.y == 0)
         {
-            groundContacts++;
             isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
         }
     }
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Object"))
-        {
-            groundContacts--;
-            if (groundContacts <= 0)
-            {
-                isGrounded = false;
-                groundContacts = 0;
-            }
-
-            touchingLeftWall = false;
-            touchingRightWall = false;
-        }
+        touchingLeftWall = false;
+        touchingRightWall = false;
     }
+
 
     private void OnCollisionStay2D(Collision2D collision)
     {
