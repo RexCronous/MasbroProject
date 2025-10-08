@@ -18,8 +18,6 @@ public class PlayerController : MonoBehaviour
     private int jumpCount = 0;
     private bool isGrounded = false;
     private bool runBeforeJump = false;
-    private bool touchingLeftWall = false;
-    private bool touchingRightWall = false;
 
     // Start is called before the first frame update
     void Start()
@@ -65,18 +63,7 @@ public class PlayerController : MonoBehaviour
         // Update Velocity
         Vector2 velocity = rb.linearVelocity;
 
-        if (touchingLeftWall && horizontalInput > 0)
-        {
-            velocity.x = 0; // prevent moving right into wall
-        }
-        else if (touchingRightWall && horizontalInput < 0)
-        {
-            velocity.x = 0; // prevent moving left into wall
-        }
-        else
-        {
-            velocity.x = horizontalInput * currentSpeed;
-        }
+        velocity.x = horizontalInput * currentSpeed;
 
         // Double Jump Logic
         if (isGrounded)
@@ -123,28 +110,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        touchingLeftWall = false;
-        touchingRightWall = false;
+        // touchingLeftWall = false;
+        // touchingRightWall = false;
     }
 
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            foreach (ContactPoint2D contact in collision.contacts)
-            {
-                if (contact.normal.x > 0.5f)
-                {
-                    touchingRightWall = true;
-                }
-                else if (contact.normal.x < -0.5f)
-                {
-                    touchingLeftWall = true;
-                }
-            }
-        }
-        
         if (collision.gameObject.CompareTag("Object"))
         {
             Rigidbody2D boxRb = collision.gameObject.GetComponent<Rigidbody2D>();
