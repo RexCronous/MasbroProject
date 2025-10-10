@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private int jumpCount = 0;
     private bool runBeforeJump = false;
     private bool isGrounded = false;
+    private bool isHit = false;
 
     // Start is called before the first frame update
     void Start()
@@ -151,12 +152,15 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.isAtCheckpoint = true;
         }
 
-        // Spawn System
-        if (other.gameObject.CompareTag("Death"))
-        {
-            Destroy(gameObject);
-            GameManager.Instance.Respawn();
-        }
+        // // Spawn System
+        // if (other.gameObject.CompareTag("Death"))
+        // {
+        //     if (!isHit)
+        //     {
+        //         Destroy(gameObject);
+        //         GameManager.Instance.Respawn();
+        //     }
+        // }
     }
 
     private void OnDrawGizmosSelected() {

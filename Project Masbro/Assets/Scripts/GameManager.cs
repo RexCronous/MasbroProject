@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int lives;
     public int respawnDelay = 1; // in seconds
     public bool isAtCheckpoint = false;
+    public bool isHit = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -55,5 +56,7 @@ public class GameManager : MonoBehaviour
             lives = maxLives;
             spawnSystem.SpawnAtStart();
         }
+
+        isHit = false;
     }
 }
