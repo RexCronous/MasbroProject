@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -16,12 +17,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int maxJump = 1;
     [SerializeField] private BoxCollider2D standingCollider;
     [SerializeField] private BoxCollider2D crouchingCollider;
-    private int groundContacts = 0;
+    [SerializeField] private Animator animator;
+    //private int groundContacts = 0;
     private Rigidbody2D rb;
     private int jumpCount = 0;
     private bool runBeforeJump = false;
     private bool isGrounded = false;
-    private bool isHit = false;
+    //private bool isHit = false;
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +76,8 @@ public class PlayerController : MonoBehaviour
         {
             jumpCount = 0;
         }
+        
+        if (jumpPressed) animator.SetBool("isJumping", true);
 
         if (jumpPressed && jumpCount < maxJump)
         {
@@ -101,9 +105,9 @@ public class PlayerController : MonoBehaviour
         // Mengaktifkan collider "berdiri" saat tidak crouch, dan collider "crouch" saat crouching
         standingCollider.enabled = !isCrouching;
         crouchingCollider.enabled = isCrouching;
-        
+
         // Ground Checking
-        if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0 , groundLayer)) 
+        if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
         {
             isGrounded = true;
         }
@@ -111,6 +115,34 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
+
+        //Flip player direction
+        if (horizontalInput > 0.01f)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (horizontalInput < -0.01f)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+
+        float velY = rb.linearVelocity.y;
+
+        if (!isGrounded && velY > 0.01f) {
+            animator.SetBool("isJumping", true);
+            animator.SetBool("isFalling", false);
+        }
+        else if (!isGrounded && velY < -0.01f) {
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isFalling", true);
+        }
+        else {
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isFalling", false);
+        }
+
+        //Animator controller
+        animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocityX));
     }
 
     private void OnCollisionExit2D(Collision2D other)

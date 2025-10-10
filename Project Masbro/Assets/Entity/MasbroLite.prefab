@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6415549101160725385}
   - component: {fileID: 770037990627433767}
   - component: {fileID: 3853927636833874304}
+  - component: {fileID: 3898950732275401989}
   m_Layer: 0
   m_Name: MasbroLite
   m_TagString: Player
@@ -143,6 +144,7 @@ MonoBehaviour:
   maxJump: 1
   standingCollider: {fileID: 770037990627433767}
   crouchingCollider: {fileID: 3853927636833874304}
+  animator: {fileID: 3898950732275401989}
 --- !u!61 &770037990627433767
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -235,6 +237,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 0.6}
   m_EdgeRadius: 0
+--- !u!95 &3898950732275401989
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752259624330159321}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4e0d01590f71c3d4981d01ffe1501a97, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2362808737940351470
 GameObject:
   m_ObjectHideFlags: 0
