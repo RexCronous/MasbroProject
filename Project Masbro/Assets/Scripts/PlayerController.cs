@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float normalJumpForce = 5.0f;
     [SerializeField] private float runJumpForce = 8.0f;
     [SerializeField] private int maxJump = 1;
+    [SerializeField] private float maxVelocityY = 15f;
     [SerializeField] private BoxCollider2D standingCollider;
     [SerializeField] private BoxCollider2D crouchingCollider;
     [SerializeField] private Animator animator;
@@ -98,6 +99,9 @@ public class PlayerController : MonoBehaviour
             float targetSpeed = Mathf.Sign(velocity.x) * movSpeed;
             velocity.x = Mathf.Lerp(velocity.x, targetSpeed, Time.deltaTime * 50f);
         }
+
+        // Biar tidak jatuh/naik terlalu cepat
+        velocity.y = Mathf.Clamp(velocity.y, -maxVelocityY, maxVelocityY);
 
         rb.linearVelocity = velocity;
 
@@ -183,18 +187,9 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.Instance.isAtCheckpoint = true;
         }
-
-        // // Spawn System
-        // if (other.gameObject.CompareTag("Death"))
-        // {
-        //     if (!isHit)
-        //     {
-        //         Destroy(gameObject);
-        //         GameManager.Instance.Respawn();
-        //     }
-        // }
     }
 
+    // Buat bentuk visual gameobject di bawah player
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.white;
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
