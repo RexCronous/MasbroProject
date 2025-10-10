@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Transform groundCheckPos;
+    [SerializeField] private Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
+    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float movSpeed = 10.0f;
     [SerializeField] private float runSpeed = 20.0f;
     // [SerializeField] private float airTime = 0f;
@@ -16,8 +19,8 @@ public class PlayerController : MonoBehaviour
     private int groundContacts = 0;
     private Rigidbody2D rb;
     private int jumpCount = 0;
-    private bool isGrounded = false;
     private bool runBeforeJump = false;
+    private bool isGrounded = false;
 
     // Start is called before the first frame update
     void Start()
@@ -98,7 +101,8 @@ public class PlayerController : MonoBehaviour
         standingCollider.enabled = !isCrouching;
         crouchingCollider.enabled = isCrouching;
         
-        if (rb.linearVelocity.y == 0)
+        // Ground Checking
+        if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0 , groundLayer)) 
         {
             isGrounded = true;
         }
@@ -113,7 +117,6 @@ public class PlayerController : MonoBehaviour
         // touchingLeftWall = false;
         // touchingRightWall = false;
     }
-
 
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -154,5 +157,10 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
             GameManager.Instance.Respawn();
         }
+    }
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
     }
 }
