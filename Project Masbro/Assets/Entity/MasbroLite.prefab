@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheckPos: {fileID: 8477499050404146395}
-  groundCheckSize: {x: 0.9, y: 0.02}
+  groundCheckSize: {x: 0.54, y: 0.02}
   groundLayer:
     serializedVersion: 2
     m_Bits: 72
@@ -142,7 +142,7 @@ MonoBehaviour:
   normalJumpForce: 10
   runJumpForce: 13
   maxJump: 1
-  maxVelocityY: 15
+  maxVelocityY: 18
   standingCollider: {fileID: 770037990627433767}
   crouchingCollider: {fileID: 3853927636833874304}
   animator: {fileID: 3898950732275401989}
@@ -199,7 +199,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752259624330159321}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 7993db34a95834a9492ade71f417bbfc, type: 2}
@@ -285,7 +285,7 @@ Transform:
   m_GameObject: {fileID: 2362808737940351470}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.48, z: 0}
+  m_LocalPosition: {x: -0.067, y: -0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

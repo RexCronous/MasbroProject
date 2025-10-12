@@ -16,7 +16,7 @@ public class AutoAssignPlayer : MonoBehaviour
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             
             if (player != null)
-            {
+            { 
                 playerTransform = player.transform;
 
                 // Set Cinemachine target ke player
