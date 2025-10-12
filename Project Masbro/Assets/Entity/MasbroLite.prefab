@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 9145350048276251432}
   - component: {fileID: 6415549101160725385}
   - component: {fileID: 770037990627433767}
-  - component: {fileID: 3853927636833874304}
   - component: {fileID: 3898950732275401989}
   m_Layer: 0
   m_Name: MasbroLite
@@ -133,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheckPos: {fileID: 8477499050404146395}
-  groundCheckSize: {x: 0.9, y: 0.02}
+  groundCheckSize: {x: 0.59, y: 0.02}
   groundLayer:
     serializedVersion: 2
     m_Bits: 72
@@ -143,8 +142,6 @@ MonoBehaviour:
   runJumpForce: 13
   maxJump: 1
   maxVelocityY: 15
-  standingCollider: {fileID: 770037990627433767}
-  crouchingCollider: {fileID: 3853927636833874304}
   animator: {fileID: 3898950732275401989}
 --- !u!61 &770037990627433767
 BoxCollider2D:
@@ -191,52 +188,6 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 0.96433306, y: 0.7233361}
-  m_EdgeRadius: 0
---- !u!61 &3853927636833874304
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752259624330159321}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 7993db34a95834a9492ade71f417bbfc, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.000000029802322, y: -0.21874812}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.96158975, y: 0.50763196}
   m_EdgeRadius: 0
 --- !u!95 &3898950732275401989
 Animator:
@@ -285,7 +236,7 @@ Transform:
   m_GameObject: {fileID: 2362808737940351470}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.48, z: 0}
+  m_LocalPosition: {x: -0.048, y: -0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
