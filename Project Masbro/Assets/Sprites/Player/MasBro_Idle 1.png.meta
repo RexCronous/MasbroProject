@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 6b9bed0608e54f14f8001c6325b47625
+guid: 39253337bce6e09419b78851a616c0f4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8287864506297282026
-    second: MasBro_Jump 1_0
+      213: 6354807491737505565
+    second: MasBro_Idle 1_0
+  - first:
+      213: 7592494878537057931
+    second: MasBro_Idle 1_1
+  - first:
+      213: -1151972706943535661
+    second: MasBro_Idle 1_2
+  - first:
+      213: 278673087659439896
+    second: MasBro_Idle 1_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,7 +135,73 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MasBro_Jump 1_0
+      name: MasBro_Idle 1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1f41099ebfc03850800000000000000
+      internalID: 6354807491737505565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MasBro_Idle 1_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b868c228dd5fd5960800000000000000
+      internalID: 7592494878537057931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MasBro_Idle 1_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d57fab2dee5300f0800000000000000
+      internalID: -1151972706943535661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MasBro_Idle 1_3
       rect:
         serializedVersion: 2
         x: 0
@@ -141,8 +216,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 612159b74279bfc80800000000000000
-      internalID: -8287864506297282026
+      spriteID: 817f66e52bb0ed300800000000000000
+      internalID: 278673087659439896
       vertices: []
       indices: 
       edges: []
@@ -151,7 +226,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 50cfa5e21fa9e2443a9d08a005790e36
+    spriteID: 7ec04df9268d57945aac5c994f65be68
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +236,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MasBro_Jump 1_0: -8287864506297282026
+      MasBro_Idle 1_0: 6354807491737505565
+      MasBro_Idle 1_1: 7592494878537057931
+      MasBro_Idle 1_2: -1151972706943535661
+      MasBro_Idle 1_3: 278673087659439896
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
