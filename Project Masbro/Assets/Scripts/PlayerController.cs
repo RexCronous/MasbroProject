@@ -16,8 +16,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float runJumpForce = 8.0f;
     [SerializeField] private int maxJump = 1;
     [SerializeField] private float maxVelocityY = 15f;
-    [SerializeField] private BoxCollider2D standingCollider;
-    [SerializeField] private BoxCollider2D crouchingCollider;
     [SerializeField] private Animator animator;
     //private int groundContacts = 0;
     private Rigidbody2D rb;
@@ -104,11 +102,6 @@ public class PlayerController : MonoBehaviour
         velocity.y = Mathf.Clamp(velocity.y, -maxVelocityY, maxVelocityY);
 
         rb.linearVelocity = velocity;
-
-        // Mekanik Crouching
-        // Mengaktifkan collider "berdiri" saat tidak crouch, dan collider "crouch" saat crouching
-        standingCollider.enabled = !isCrouching;
-        crouchingCollider.enabled = isCrouching;
 
         // Ground Checking
         if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
