@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,9 +13,9 @@ public class GameManager : MonoBehaviour
     public bool isHit = false;
     private UIManager uiManager;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
+        // Singleton setup
         if (Instance == null)
         {
             Instance = this;
@@ -23,21 +24,29 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
-        lives = maxLives;
+        // Daftarkan event untuk scene change
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded; // hapus event listener
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        uiManager = FindFirstObjectByType<UIManager>();
+        spawnSystem = FindFirstObjectByType<SpawnSystem>();
+
         spawnSystem.SpawnAtStart();
     }
 
-    private void Awake()
+    void Start()
     {
-        uiManager = FindFirstObjectByType<UIManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        lives = maxLives;
     }
 
     public async void Respawn()
@@ -45,7 +54,7 @@ public class GameManager : MonoBehaviour
         await Task.Delay(respawnDelay * 1000); // Convert seconds to milliseconds
 
         if (lives > 1)
-        {
+        {    
             lives--;
             if (isAtCheckpoint)
             {
@@ -60,7 +69,6 @@ public class GameManager : MonoBehaviour
         {
             isAtCheckpoint = false;
             lives = maxLives;
-            spawnSystem.SpawnAtStart();
             uiManager.GameOver();
         }
 

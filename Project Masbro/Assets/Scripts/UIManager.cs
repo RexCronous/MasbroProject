@@ -6,26 +6,27 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private AudioClip gameOverSound;
     private AudioSource audioSource;
-    private SpawnSystem spawnSystem;
 
     private void Awake()
     {
-        // Ambil AudioSource dari GameObject ini
-        audioSource = GetComponent<AudioSource>();
-
-        // Kalau belum ada, tambahkan otomatis
         if (audioSource == null)
         {
-            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
         }
-        gameOverScreen.SetActive(false);
+
+        if (gameOverScreen != null)
+            gameOverScreen.SetActive(false);
     }
 
     public void GameOver()
     {
-        gameOverScreen.SetActive(true);
+        if (gameOverScreen != null)
+            gameOverScreen.SetActive(true);
 
-        // Pastikan ada AudioClip sebelum dimainkan
         if (gameOverSound != null)
             audioSource.PlayOneShot(gameOverSound);
         else
@@ -35,7 +36,6 @@ public class UIManager : MonoBehaviour
     // game over funtion
     public void Restart()
     {
-        spawnSystem.SpawnAtStart();// this method is not work fr fr
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
