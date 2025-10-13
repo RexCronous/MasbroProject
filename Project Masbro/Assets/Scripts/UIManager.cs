@@ -37,6 +37,7 @@ public class UIManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        spawnSystem.SpawnAtStart();// this method is not work fr fr
     }
 
     public void MainMenu()
