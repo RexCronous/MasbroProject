@@ -186,6 +186,12 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.Instance.isAtCheckpoint = true;
         }
+
+        // Reaching finish line
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            GameManager.Instance.nextLevel();
+        }
     }
 
     // Buat bentuk visual gameobject di bawah player

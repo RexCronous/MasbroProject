@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public int respawnDelay = 1; // in seconds
     public bool isAtCheckpoint = false;
     public bool isHit = false;
+    public int currentSceneIndex;
     private UIManager uiManager;
 
     void Awake()
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
 
         // Daftarkan event untuk scene change
         SceneManager.sceneLoaded += OnSceneLoaded;
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     private void OnDestroy()
@@ -73,5 +75,17 @@ public class GameManager : MonoBehaviour
         }
 
         isHit = false;
+    }
+
+    public async void nextLevel()
+    {   
+        await Task.Delay(1 * 1000);
+
+        currentSceneIndex++;
+        if (currentSceneIndex >= SceneManager.sceneCountInBuildSettings)
+        {
+            currentSceneIndex = 0; // Kembali ke menu utama atau scene pertama
+        }
+        SceneManager.LoadScene(currentSceneIndex);
     }
 }
