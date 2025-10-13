@@ -15,7 +15,7 @@ GameObject:
   m_Layer: 6
   m_Name: Wooden Crate
   m_TagString: Object
-  m_Icon: {fileID: 2800000, guid: 53f01bb50362f5946b9afa7b76e41c33, type: 3}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -123,7 +123,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.015267193}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -133,7 +133,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.9694656}
   m_EdgeRadius: 0
 --- !u!50 &6262377919432999471
 Rigidbody2D:
