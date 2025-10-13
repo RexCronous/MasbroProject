@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Tilemaps;
+using UnityEngine.Tilemaps;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
