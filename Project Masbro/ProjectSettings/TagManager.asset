@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Death
   - Checkpoint
+  - CameraConfiner
   layers:
   - Default
   - TransparentFX
