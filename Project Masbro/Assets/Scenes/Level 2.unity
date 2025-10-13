@@ -1030,7 +1030,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.991886, y: 7.2514186, z: -27.4541}
+  m_LocalPosition: {x: 7.991871, y: 7.2514186, z: -27.4541}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3286,7 +3286,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -3.1099777, y: -0.104602575}
+  m_Offset: {x: -48.492676, y: -0.104602575}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3296,7 +3296,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 57.522827, y: 1.0425673}
+  m_Size: {x: 148.28821, y: 1.0425673}
   m_EdgeRadius: 0
 --- !u!4 &1866023892
 Transform:
@@ -10217,7 +10217,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 752259624330159321, guid: e90a9ef6fe55c0e4499cd3d2a4f48a89, type: 3}
   startingPosition: {fileID: 1642979421}
-  checkpointPosition: {fileID: 1425624342992111521}
+  checkpointPosition:
+  - {fileID: 0}
 --- !u!4 &2008357249
 Transform:
   m_ObjectHideFlags: 0
@@ -10638,11 +10639,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
---- !u!4 &1425624342992111521 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3250161441942746767, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
-  m_PrefabInstance: {fileID: 858296924972387050}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

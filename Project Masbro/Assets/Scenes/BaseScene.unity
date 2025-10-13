@@ -151,7 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 752259624330159321, guid: e90a9ef6fe55c0e4499cd3d2a4f48a89, type: 3}
   startingPosition: {fileID: 1642979421}
-  checkpointPosition: {fileID: 1425624342992111521}
+  checkpointPosition:
+  - {fileID: 0}
 --- !u!4 &87953366
 Transform:
   m_ObjectHideFlags: 0
@@ -796,7 +797,7 @@ GameObject:
   - component: {fileID: 978320441}
   m_Layer: 0
   m_Name: CameraBuffer
-  m_TagString: Untagged
+  m_TagString: CameraConfiner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2198,7 +2199,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 752259624330159321, guid: e90a9ef6fe55c0e4499cd3d2a4f48a89, type: 3}
   startingPosition: {fileID: 1642979421}
-  checkpointPosition: {fileID: 1425624342992111521}
+  checkpointPosition:
+  - {fileID: 0}
 --- !u!4 &2098332758
 Transform:
   m_ObjectHideFlags: 0
@@ -2316,11 +2318,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
---- !u!4 &1425624342992111521 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3250161441942746767, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
-  m_PrefabInstance: {fileID: 858296924972387050}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
