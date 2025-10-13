@@ -6,6 +6,7 @@ public class SpawnSystem : MonoBehaviour
     public Transform startingPosition;
     public Transform checkpointPosition;
 
+
     public void SpawnAtStart()
     {
         SpawnPlayer(startingPosition);

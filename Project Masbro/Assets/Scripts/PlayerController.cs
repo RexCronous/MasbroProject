@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private int jumpCount = 0;
     private bool runBeforeJump = false;
     private bool isGrounded = false;
+    public ParticleSystem SmokeFX;
     //private bool isHit = false;
 
     // Start is called before the first frame update
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
         if (jumpPressed && jumpCount < maxJump)
         {
+            SmokeFX.Play();
             if (jumpCount == 0)
             {
                 velocity.y = isRunning && (Mathf.Abs(velocity.x) > movSpeed) ? runJumpForce : normalJumpForce;
@@ -140,6 +142,10 @@ public class PlayerController : MonoBehaviour
 
         //Animator controller
         animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocityX));
+
+        if (isRunning && !SmokeFX.isPlaying && Mathf.Abs(rb.linearVelocityX) > 0) {
+            SmokeFX.Play();
+        }
     }
 
     private void OnCollisionExit2D(Collision2D other)

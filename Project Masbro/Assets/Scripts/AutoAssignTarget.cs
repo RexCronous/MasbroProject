@@ -1,31 +1,58 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using UnityEngine.SceneManagement;
 
-public class AutoAssignPlayer : MonoBehaviour
+public class AutoAssignTarget : MonoBehaviour
 {
     public CinemachineCamera cineCam;
+    private CinemachineConfiner2D confiner2D;
     private Transform playerTransform;
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        AssignPlayerAndConfiner();
+    }
 
     void Update()
     {
-        // Jika player belum ditemukan, cari dengan tag "Player"
-        if (playerTransform == null || !playerTransform.gameObject.activeInHierarchy)
+        // Jika player hilang (mati / reload scene), cari lagi
+        if (playerTransform == null)
+            AssignPlayerAndConfiner();
+    }
+
+    private void AssignPlayerAndConfiner()
+    {
+        // Cari player
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            playerTransform = player.transform;
+
+        // Cari confiner di scene baru
+        GameObject confinerObj = GameObject.FindGameObjectWithTag("CameraConfiner");
+        if (confinerObj != null)
+            confiner2D = confinerObj.GetComponent<CinemachineConfiner2D>();
+
+        // Update target Cinemachine
+        if (cineCam != null && playerTransform != null)
         {
-            playerTransform = null;
+            cineCam.Target.TrackingTarget = playerTransform;
+            cineCam.Target.LookAtTarget = playerTransform;
+        }
 
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            
-            if (player != null)
-            { 
-                playerTransform = player.transform;
-
-                // Set Cinemachine target ke player
-                if (cineCam != null)
-                {
-                    cineCam.Target.TrackingTarget = playerTransform;
-                    cineCam.Target.LookAtTarget = playerTransform;
-                }
-            }
+        // Update confiner bounding shape
+        if (confiner2D != null)
+        {
+            confiner2D.InvalidateBoundingShapeCache();
         }
     }
 }

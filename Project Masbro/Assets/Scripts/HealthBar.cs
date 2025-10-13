@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private GameManager gameManager;
     [SerializeField] private Image totalHealhBar;
     [SerializeField] private Image currentHealthBar;
 
@@ -14,9 +13,9 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
-        if (gameManager != null && currentHealthBar != null)
+        if (GameManager.Instance != null && currentHealthBar != null)
         {
-            currentHealthBar.fillAmount = gameManager.lives / 10f;
+            currentHealthBar.fillAmount = GameManager.Instance.lives / 10f;
         }
     }
 }
