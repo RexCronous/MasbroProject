@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 770037990627433767}
   - component: {fileID: 3898950732275401989}
   m_Layer: 0
-  m_Name: MasbroLite
+  m_Name: Masbro
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

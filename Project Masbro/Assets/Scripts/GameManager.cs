@@ -5,13 +5,21 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public SpawnSystem spawnSystem;
+    
+    [Header("Game Settings")]
     public int maxLives = 3;
     public int lives;
     public int respawnDelay = 1; // in seconds
-    public bool isAtCheckpoint = false;
+    
+    [Header("Player State")]
     public bool isHit = false;
+    public bool isAtCheckpoint = false;
+
+    [Header("Level Management")]
     public int currentSceneIndex;
+    
+    // References to other managers
+    private SpawnSystem spawnSystem;
     private UIManager uiManager;
 
     void Awake()
@@ -51,6 +59,17 @@ public class GameManager : MonoBehaviour
         lives = maxLives;
     }
 
+    public void SaveCheckpoint()
+    {
+        if (!isAtCheckpoint)
+        {
+            spawnSystem.FirstCheckpoint();
+            isAtCheckpoint = true;
+        }
+        else
+            spawnSystem.NextCheckpoint();
+    }
+
     public async void Respawn()
     {
         await Task.Delay(respawnDelay * 1000); // Convert seconds to milliseconds
@@ -77,7 +96,7 @@ public class GameManager : MonoBehaviour
         isHit = false;
     }
 
-    public async void nextLevel()
+    public async void NextLevel()
     {   
         await Task.Delay(1 * 1000);
 

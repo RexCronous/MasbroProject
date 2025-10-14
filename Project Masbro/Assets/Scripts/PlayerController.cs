@@ -6,9 +6,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Ground Check")]
     [SerializeField] private Transform groundCheckPos;
     [SerializeField] private Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
     [SerializeField] private LayerMask groundLayer;
+
+    [Header("Movement Parameters")]
     [SerializeField] private float movSpeed = 10.0f;
     [SerializeField] private float runSpeed = 20.0f;
     // [SerializeField] private float airTime = 0f;
@@ -16,14 +19,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float runJumpForce = 8.0f;
     [SerializeField] private int maxJump = 1;
     [SerializeField] private float maxVelocityY = 15f;
+
+    [Header("Animation & Feedback")]
     [SerializeField] private Animator animator;
+    public ParticleSystem SmokeFX;
     //private int groundContacts = 0;
+
     private Rigidbody2D rb;
     private int jumpCount = 0;
     private bool runBeforeJump = false;
     private bool isGrounded = false;
-    public ParticleSystem SmokeFX;
-    //private bool isHit = false;
 
     // Start is called before the first frame update
     void Start()
@@ -184,13 +189,13 @@ public class PlayerController : MonoBehaviour
         // Reaching checkpoint
         if (other.gameObject.CompareTag("Checkpoint"))
         {
-            GameManager.Instance.isAtCheckpoint = true;
+            GameManager.Instance.SaveCheckpoint();
         }
 
         // Reaching finish line
         if (other.gameObject.CompareTag("Finish"))
         {
-            GameManager.Instance.nextLevel();
+            GameManager.Instance.NextLevel();
         }
     }
 
