@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour
 
     public void MainMenu()
     {
-        GameManager.Instance.currentSceneIndex = 0;
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 

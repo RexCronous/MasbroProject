@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8842259485058056531}
   - component: {fileID: 5533103776790088317}
   - component: {fileID: 9145350048276251432}
-  - component: {fileID: 6415549101160725385}
   - component: {fileID: 770037990627433767}
+  - component: {fileID: 6415549101160725385}
   - component: {fileID: 3898950732275401989}
   m_Layer: 0
   m_Name: Masbro
@@ -120,31 +120,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &6415549101160725385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752259624330159321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eca4446720f64d14f8701420b08e200d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundCheckPos: {fileID: 8477499050404146395}
-  groundCheckSize: {x: 0.59, y: 0.02}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 72
-  movSpeed: 10
-  runSpeed: 15
-  normalJumpForce: 10
-  runJumpForce: 13
-  maxJump: 1
-  maxVelocityY: 15
-  animator: {fileID: 3898950732275401989}
-  SmokeFX: {fileID: 1905659679170778393}
 --- !u!61 &770037990627433767
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -179,7 +154,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0013719797, y: -0.11254221}
+  m_Offset: {x: -0.041438088, y: -0.15744063}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -189,8 +164,33 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.96433306, y: 0.7233361}
+  m_Size: {x: 0.66914105, y: 0.61781186}
   m_EdgeRadius: 0
+--- !u!114 &6415549101160725385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752259624330159321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca4446720f64d14f8701420b08e200d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheckPos: {fileID: 8477499050404146395}
+  groundCheckSize: {x: 0.59, y: 0.02}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 72
+  movSpeed: 10
+  runSpeed: 15
+  normalJumpForce: 10
+  runJumpForce: 13
+  maxJump: 1
+  maxVelocityY: 15
+  animator: {fileID: 3898950732275401989}
+  SmokeFX: {fileID: 1905659679170778393}
 --- !u!95 &3898950732275401989
 Animator:
   serializedVersion: 7

@@ -6,6 +6,7 @@ public class StartMenuController : MonoBehaviour
     public void OnStartClick()
     {
         print("start");
+        Time.timeScale = 1f;
         SceneManager.LoadScene(1);
     }
 

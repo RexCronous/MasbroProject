@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if (Instance != this)
         {
             Destroy(gameObject);
             return;
@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
 
         // Daftarkan event untuk scene change
         SceneManager.sceneLoaded += OnSceneLoaded;
-        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     private void OnDestroy()
@@ -48,15 +47,25 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // Pastikan timeScale normal saat pindah scene
+        Time.timeScale = 1f;
+
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+        if (currentSceneIndex == 0) // Main Menu
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
         uiManager = FindFirstObjectByType<UIManager>();
         spawnSystem = FindFirstObjectByType<SpawnSystem>();
 
-        spawnSystem.SpawnAtStart();
-    }
-
-    void Start()
-    {
         lives = maxLives;
+        isAtCheckpoint = false;
+        isHit = false;
+
+        spawnSystem.SpawnAtStart();
     }
 
     public void SaveCheckpoint()
@@ -88,9 +97,9 @@ public class GameManager : MonoBehaviour
         }
         else // lives == 0
         {
-            isAtCheckpoint = false;
-            lives = maxLives;
-            uiManager.GameOver();
+            lives = 0;
+            uiManager = uiManager ?? FindFirstObjectByType<UIManager>();
+            uiManager?.GameOver();
         }
 
         isHit = false;

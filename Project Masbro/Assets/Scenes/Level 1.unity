@@ -220,12 +220,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b57813e76b87f94f819072a120ada5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnSystem: {fileID: 0}
   maxLives: 3
   lives: 0
   respawnDelay: 1
-  isAtCheckpoint: 0
   isHit: 0
+  isAtCheckpoint: 0
   currentSceneIndex: 1
 --- !u!1001 &98960987
 PrefabInstance:
@@ -2536,9 +2535,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 752259624330159321, guid: e90a9ef6fe55c0e4499cd3d2a4f48a89, type: 3}
-  startingPosition: {fileID: 1642979421}
-  checkpointPosition:
-  - {fileID: 858296924972387051}
+  starting: {fileID: 1533353408}
+  checkpoint:
+  - {fileID: 2124055277}
 --- !u!4 &837719202
 Transform:
   m_ObjectHideFlags: 0
@@ -3593,7 +3592,7 @@ CompositeCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
@@ -12712,9 +12711,9 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513850958}
   m_CullTransparentMesh: 1
---- !u!4 &1642979421 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3101033967919213533, guid: b88f5ded53b3b134581dca2154e7ff81, type: 3}
+--- !u!1 &1533353408 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6987262821725825005, guid: b88f5ded53b3b134581dca2154e7ff81, type: 3}
   m_PrefabInstance: {fileID: 1112533863}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1643409120
@@ -14165,6 +14164,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2106269708}
   m_CullTransparentMesh: 1
+--- !u!1 &2124055277 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5349429136042890435, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
+  m_PrefabInstance: {fileID: 858296924972387050}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &858296924972387050
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14234,11 +14238,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
---- !u!4 &858296924972387051 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3250161441942746767, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
-  m_PrefabInstance: {fileID: 858296924972387050}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
