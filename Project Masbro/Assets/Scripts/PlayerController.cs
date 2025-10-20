@@ -99,14 +99,25 @@ public class PlayerController : MonoBehaviour
         }
 
         // Sedikit mengurangi kecepatan horizontal saat lari lalu melompat
-        if (!isGrounded && Mathf.Abs(velocity.x) > movSpeed)
-        {
-            float targetSpeed = Mathf.Sign(velocity.x) * movSpeed;
-            velocity.x = Mathf.Lerp(velocity.x, targetSpeed, Time.deltaTime * 50f);
-        }
+        // if (!isGrounded && Mathf.Abs(velocity.x) > movSpeed)
+        // {
+        //     float targetSpeed = Mathf.Sign(velocity.x) * movSpeed;
+        //     velocity.x = Mathf.Lerp(velocity.x, targetSpeed, Time.deltaTime * 50f);
+        // }
 
         // Biar tidak jatuh/naik terlalu cepat
-        velocity.y = Mathf.Clamp(velocity.y, -maxVelocityY, maxVelocityY);
+        // velocity.y = Mathf.Clamp(velocity.y, -maxVelocityY, maxVelocityY);
+
+        if (velocity.y < 0)
+        {
+            // Falling faster
+            velocity.y += Physics2D.gravity.y * Time.deltaTime * 2.5f;
+        }
+        else if (velocity.y > 0 && !Input.GetButton("Jump"))
+        {
+            // Jump cut
+            velocity.y += Physics2D.gravity.y * Time.deltaTime * 2f;
+        }
 
         rb.linearVelocity = velocity;
 
@@ -114,10 +125,12 @@ public class PlayerController : MonoBehaviour
         if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
         {
             isGrounded = true;
+            print("Grounded");
         }
         else
         {
             isGrounded = false;
+            print("Not Grounded");
         }
 
         //Flip player direction
