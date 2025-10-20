@@ -185,10 +185,10 @@ MonoBehaviour:
     m_Bits: 72
   movSpeed: 8
   runSpeed: 12
-  normalJumpForce: 6
-  runJumpForce: 7
+  normalJumpForce: 8
+  runJumpForce: 9
   maxJump: 1
-  maxVelocityY: 15
+  maxVelocityY: 20
   animator: {fileID: 3898950732275401989}
   SmokeFX: {fileID: 1905659679170778393}
 --- !u!95 &3898950732275401989
@@ -5071,7 +5071,7 @@ Transform:
   m_GameObject: {fileID: 2362808737940351470}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.048, y: -0.452, z: 0}
+  m_LocalPosition: {x: -0.048, y: -0.428, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
