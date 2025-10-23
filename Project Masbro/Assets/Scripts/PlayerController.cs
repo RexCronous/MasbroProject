@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
         bool isRunning = Input.GetAxis("Run") > 0;
         bool isCrouching = Input.GetKey(KeyCode.C);
         bool jumpPressed = Input.GetButtonDown("Jump");
+        bool inputLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
+        bool inputRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
 
         // Mengecek apakah player sedang di tanah (grounded)
         if (isGrounded)
@@ -74,7 +76,15 @@ public class PlayerController : MonoBehaviour
         // Update Velocity
         Vector2 velocity = rb.linearVelocity;
 
-        velocity.x = horizontalInput * currentSpeed;
+        if (inputLeft && inputRight)
+            velocity.x = Mathf.Lerp(velocity.x, 0.0f, 6f * Time.deltaTime);
+        else
+            velocity.x = horizontalInput * currentSpeed;
+        
+        if (Mathf.Abs(velocity.x) > 0f && Mathf.Abs(velocity.x) < 0.7f)
+        {
+            velocity.x = 0f;
+        }
 
         // Double Jump Logic
         if (isGrounded)
