@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
     // game over funtion
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(GameManager.Instance.currentSceneIndex);
         //spawnSystem.SpawnAtStart();// this method is not work fr fr
     }
 
