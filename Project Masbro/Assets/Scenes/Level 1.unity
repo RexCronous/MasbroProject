@@ -283,7 +283,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RESUME
+  m_text: RESTART
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5b07ae00bcfb94c9ca45e27894e361b0, type: 2}
   m_sharedMaterial: {fileID: 5379539787352519924, guid: 5b07ae00bcfb94c9ca45e27894e361b0, type: 2}
@@ -1171,8 +1171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetsPPU: 32
-  m_RefResolutionX: 640
-  m_RefResolutionY: 320
+  m_RefResolutionX: 1920
+  m_RefResolutionY: 1080
   m_UpscaleRT: 0
   m_PixelSnapping: 1
   m_CropFrameX: 0
@@ -12471,8 +12471,8 @@ MonoBehaviour:
   - {fileID: 644406085}
   - {fileID: 662380712}
   - {fileID: 562341154}
-  changeSound: {fileID: 0}
-  interactSound: {fileID: 0}
+  changeSound: {fileID: 8300000, guid: de2235eef47bb43e4937577d7ae7fa22, type: 3}
+  interactSound: {fileID: 8300000, guid: 9405211d20bdd482d95122cac786092d, type: 3}
 --- !u!114 &1675165903
 MonoBehaviour:
   m_ObjectHideFlags: 0

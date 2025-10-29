@@ -6,21 +6,13 @@ public class SelectionArrow : MonoBehaviour
 {
     private RectTransform rect;
     [SerializeField] private RectTransform[] options;       // Daftar posisi menu
-    [SerializeField] private AudioClip changeSound;         // Suara saat ganti pilihan
-    [SerializeField] private AudioClip interactSound;       // Suara saat pilih menu
-    private AudioSource audioSource;
+    AudioManager audioManager;
     private int currentPosition = 0;
 
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
-        audioSource = GetComponent<AudioSource>();
-
-        if (audioSource == null)
-        {
-            // Jika belum ada AudioSource, tambahkan otomatis
-            audioSource = gameObject.AddComponent<AudioSource>();
-        }
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -43,10 +35,10 @@ public class SelectionArrow : MonoBehaviour
         if (options.Length == 0) return;
 
         currentPosition += change;
-
-        // Putar suara hanya kalau benar-benar berubah
-        if (change != 0 && changeSound != null)
-            audioSource.PlayOneShot(changeSound);
+        if (audioManager != null && audioManager.selectItemGameOverMenu != null)
+        {
+            audioManager.PlaySfx(audioManager.selectItemGameOverMenu);
+        }
 
         // Looping posisi (atas-bawah)
         if (currentPosition < 0)
@@ -60,8 +52,11 @@ public class SelectionArrow : MonoBehaviour
 
     private void Interact()
     {
-        if (interactSound != null)
-            audioSource.PlayOneShot(interactSound);
+        // not work yet
+        if (audioManager != null && audioManager.interactItemGameOverMenu != null)
+        {
+            audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
+        }
 
         // Tambahkan aksi sesuai menu yang dipilih
         Debug.Log($"Selected option index: {currentPosition}");
