@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private bool runBeforeJump = false;
     private bool isGrounded = false;
     AudioManager audioManager;
+    private float nextFootstepTime = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -163,6 +164,30 @@ public class PlayerController : MonoBehaviour
         else if (horizontalInput < -0.01f)
         {
             transform.localScale = new Vector3(-1, 1, 1);
+        }
+
+        // Movement SFX with delay and random selection for walking
+        bool isMovingNow = isGrounded && Mathf.Abs(rb.linearVelocity.x) > 0.1f;
+        if (isMovingNow && Time.time >= nextFootstepTime)
+        {
+            if (isRunning)
+            {
+                // if (audioManager != null && audioManager.run != null)
+                // {
+                //     audioManager.PlaySfx(audioManager.run);
+                //     nextFootstepTime = Time.time + 0.8f; // 500ms delay
+                // }
+            }
+            else
+            {
+                if (audioManager != null && audioManager.walking != null && audioManager.walking.Length > 0)
+                {
+                    // Randomly select a walking sound from the array
+                    AudioClip randomWalkClip = audioManager.walking[UnityEngine.Random.Range(0, audioManager.walking.Length)];
+                    audioManager.PlaySfx(randomWalkClip);
+                    nextFootstepTime = Time.time + 0.80f; // 500ms delay
+                }
+            }
         }
 
         float velY = rb.linearVelocity.y;

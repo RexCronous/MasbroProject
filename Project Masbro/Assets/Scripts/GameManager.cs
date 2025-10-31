@@ -85,10 +85,6 @@ public class GameManager : MonoBehaviour
 
     public async void Respawn()
     {
-        if (audioManager != null && audioManager.takeDamage != null)
-        {
-            audioManager.PlaySfx(audioManager.takeDamage);
-        }
         await Task.Delay(respawnDelay * 1000); // Convert seconds to milliseconds
 
         if (lives > 1)

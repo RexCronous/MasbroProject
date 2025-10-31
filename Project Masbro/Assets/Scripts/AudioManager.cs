@@ -9,12 +9,17 @@ public class AudioManager : MonoBehaviour
     [Header("==========Audio Clip==========")]
     public AudioClip gameOver; //done
     public AudioClip selectItemGameOverMenu; // done
-    public AudioClip interactItemGameOverMenu; // not yet
+    public AudioClip interactItemGameOverMenu; // done
     public AudioClip takeDamage; // done
     public AudioClip jump; // done
     public AudioClip boxTouch; // not yet
-    public AudioClip walking; // ambigous
-    public AudioClip run; // same ambigous
+    public AudioClip[] walking; // done
+    public AudioClip run; // not yet
+    public AudioClip checkPoint; // not yet
+    public AudioClip openPause; // done
+    public AudioClip closedPause; // done
+
+    // music is ready
 
     // start music (when music is ready)
     // private void Start()

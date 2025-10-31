@@ -62,9 +62,21 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseScreen.activeInHierarchy)
+            {
                 PauseGame(false);
+                if (audioManager != null && audioManager.openPause != null)
+                {
+                    audioManager.PlaySfx(audioManager.openPause);
+                }
+            }
             else
+            {
                 PauseGame(true);
+                if (audioManager != null && audioManager.closedPause != null)
+                {
+                    audioManager.PlaySfx(audioManager.closedPause);
+                }
+            }
         }
     }
 

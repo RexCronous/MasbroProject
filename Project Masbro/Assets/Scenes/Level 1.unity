@@ -845,10 +845,18 @@ MonoBehaviour:
   selectItemGameOverMenu: {fileID: 8300000, guid: de2235eef47bb43e4937577d7ae7fa22, type: 3}
   interactItemGameOverMenu: {fileID: 8300000, guid: 9405211d20bdd482d95122cac786092d, type: 3}
   takeDamage: {fileID: 8300000, guid: d3ce73a10593f4ac9a8e920766351d34, type: 3}
-  jump: {fileID: 8300000, guid: 0a2719480c851491daec0bffffcc0eaf, type: 3}
+  jump: {fileID: 8300000, guid: bd6ee4797272d41198d46c34d1c0af35, type: 3}
   boxTouch: {fileID: 8300000, guid: 35aae7b871d70447496b035d3ca9d56c, type: 3}
-  walking: {fileID: 8300000, guid: bfaf0e7d3380c44b4a8e38eb66736bb5, type: 3}
+  walking:
+  - {fileID: 8300000, guid: c5c14bddf02a345058d146587fae08a6, type: 3}
+  - {fileID: 8300000, guid: 236c685ff55c3416ba9913a0ee9ef62f, type: 3}
+  - {fileID: 8300000, guid: fb5d4b9285ee0411a9fa0bab1b91903f, type: 3}
+  - {fileID: 8300000, guid: e80dc41e824a3433db72e9af404296b0, type: 3}
+  - {fileID: 8300000, guid: 82029aeee272e4a839f389d6eb223dbd, type: 3}
   run: {fileID: 8300000, guid: d525a51ce34534e6e8729c4c69e2b1f9, type: 3}
+  checkPoint: {fileID: 0}
+  openPause: {fileID: 8300000, guid: dab34acdb1c57414789e5b92208c883e, type: 3}
+  closedPause: {fileID: 8300000, guid: d6fc96b4f4ff94908bed477c9a0a92c0, type: 3}
 --- !u!4 &333248046
 Transform:
   m_ObjectHideFlags: 0
