@@ -68,12 +68,11 @@ public class GameManager : MonoBehaviour
         spawnSystem.SpawnAtStart();
     }
 
-    public void SaveCheckpoint()
+    public void SaveCheckpoint(int Index)
     {
-        if (!isAtCheckpoint)
-            isAtCheckpoint = true;
-        else
-            spawnSystem.NextCheckpoint();
+        spawnSystem = FindFirstObjectByType<SpawnSystem>();
+        spawnSystem.index = Index;
+        isAtCheckpoint = true;
     }
 
     public async void Respawn()

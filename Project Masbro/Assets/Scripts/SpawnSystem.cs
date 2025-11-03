@@ -5,7 +5,7 @@ public class SpawnSystem : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject starting;
     public GameObject[] checkpoint;
-    private int index = 0;
+    public int index = 0;
 
 
     public void SpawnAtStart()
@@ -21,18 +21,5 @@ public class SpawnSystem : MonoBehaviour
     private void SpawnPlayer(Transform spawnPoint)
     {
         Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
-    }
-    
-    public void NextCheckpoint()
-    {
-        NextIndex();
-    }
-
-    private void NextIndex()
-    {
-        if (index < checkpoint.Length - 1)
-            index++;
-        else
-            return;
     }
 }

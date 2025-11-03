@@ -12482,6 +12482,7 @@ MonoBehaviour:
   starting: {fileID: 1112533864}
   checkpoint:
   - {fileID: 858296924972387051}
+  index: 0
 --- !u!4 &2008357249
 Transform:
   m_ObjectHideFlags: 0
@@ -12854,7 +12855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3250161441942746767, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3250161441942746767, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
       propertyPath: m_LocalRotation.w

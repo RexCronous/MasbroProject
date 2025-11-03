@@ -135,12 +135,12 @@ public class PlayerController : MonoBehaviour
         if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
         {
             isGrounded = true;
-            print("Grounded");
+            // print("Grounded");
         }
         else
         {
             isGrounded = false;
-            print("Not Grounded");
+            // print("Not Grounded");
         }
 
         //Flip player direction
