@@ -29,11 +29,18 @@ public class PlayerController : MonoBehaviour
     private int jumpCount = 0;
     private bool runBeforeJump = false;
     private bool isGrounded = false;
+    AudioManager audioManager;
+    private float nextFootstepTime = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -47,13 +54,15 @@ public class PlayerController : MonoBehaviour
         bool inputLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
         bool inputRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
 
+        // audioManager.PlaySfx(audioManager.walking);
+        // audioManager.PlaySfx(audioManager.run);
         // Mengecek apakah player sedang di tanah (grounded)
         if (isGrounded)
         {
             // Simpan status apakah player sedang berlari sebelum melakukan lompatan
             runBeforeJump = isRunning;
         }
-        
+
         // Speed modifier
         float currentSpeed = 0f;
 
@@ -80,7 +89,7 @@ public class PlayerController : MonoBehaviour
             velocity.x = Mathf.Lerp(velocity.x, 0.0f, 6f * Time.deltaTime);
         else
             velocity.x = horizontalInput * currentSpeed;
-        
+
         if (Mathf.Abs(velocity.x) > 0f && Mathf.Abs(velocity.x) < 0.7f)
         {
             velocity.x = 0f;
@@ -91,12 +100,16 @@ public class PlayerController : MonoBehaviour
         {
             jumpCount = 0;
         }
-        
+
         if (jumpPressed) animator.SetBool("isJumping", true);
 
         if (jumpPressed && jumpCount < maxJump)
         {
             SmokeFX.Play();
+            if (audioManager != null && audioManager.jump != null)
+            {
+                audioManager.PlaySfx(audioManager.jump);
+            }
             if (jumpCount == 0)
             {
                 velocity.y = isRunning && (Mathf.Abs(velocity.x) > movSpeed) ? runJumpForce : normalJumpForce;
@@ -153,17 +166,44 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
+        // Movement SFX with delay and random selection for walking
+        bool isMovingNow = isGrounded && Mathf.Abs(rb.linearVelocity.x) > 0.1f;
+        if (isMovingNow && Time.time >= nextFootstepTime)
+        {
+            if (isRunning)
+            {
+                // if (audioManager != null && audioManager.run != null)
+                // {
+                //     audioManager.PlaySfx(audioManager.run);
+                //     nextFootstepTime = Time.time + 0.8f; // 500ms delay
+                // }
+            }
+            else
+            {
+                if (audioManager != null && audioManager.walking != null && audioManager.walking.Length > 0)
+                {
+                    // Randomly select a walking sound from the array
+                    AudioClip randomWalkClip = audioManager.walking[UnityEngine.Random.Range(0, audioManager.walking.Length)];
+                    audioManager.PlaySfx(randomWalkClip);
+                    nextFootstepTime = Time.time + 0.80f; // 500ms delay
+                }
+            }
+        }
+
         float velY = rb.linearVelocity.y;
 
-        if (!isGrounded && velY > 0.01f) {
+        if (!isGrounded && velY > 0.01f)
+        {
             animator.SetBool("isJumping", true);
             animator.SetBool("isFalling", false);
         }
-        else if (!isGrounded && velY < -0.01f) {
+        else if (!isGrounded && velY < -0.01f)
+        {
             animator.SetBool("isJumping", false);
             animator.SetBool("isFalling", true);
         }
-        else {
+        else
+        {
             animator.SetBool("isJumping", false);
             animator.SetBool("isFalling", false);
         }
@@ -171,7 +211,8 @@ public class PlayerController : MonoBehaviour
         //Animator controller
         animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocityX));
 
-        if (isRunning && !SmokeFX.isPlaying && Mathf.Abs(rb.linearVelocityX) > 0) {
+        if (isRunning && !SmokeFX.isPlaying && Mathf.Abs(rb.linearVelocityX) > 0)
+        {
             SmokeFX.Play();
         }
     }
@@ -208,7 +249,8 @@ public class PlayerController : MonoBehaviour
     }
 
     // Buat bentuk visual gameobject di bawah player
-    private void OnDrawGizmosSelected() {
+    private void OnDrawGizmosSelected()
+    {
         Gizmos.color = Color.white;
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
     }

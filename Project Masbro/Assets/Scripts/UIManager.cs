@@ -5,35 +5,33 @@ public class UIManager : MonoBehaviour
 {
     [Header("Game Over")]
     [SerializeField] private GameObject gameOverScreen;
-    [SerializeField] private AudioClip gameOverSound;
     [Header("Pause")]
     [SerializeField] private GameObject pauseScreen;
-
-    private AudioSource audioSource;
+    AudioManager audioManager;
 
     private void Awake()
     {
-        if (audioSource == null)
-        {
-            audioSource = GetComponent<AudioSource>();
-            if (audioSource == null)
-            {
-                audioSource = gameObject.AddComponent<AudioSource>();
-            }
-        }
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
         gameOverScreen.SetActive(false);
         pauseScreen.SetActive(false);
     }
     #region  Game Over
     public void GameOver()
     {
+        if (audioManager != null && audioManager.gameOver != null)
+        {
+            audioManager.PlaySfx(audioManager.gameOver);
+        }
         if (gameOverScreen != null)
+        {
             gameOverScreen.SetActive(true);
-
-        if (gameOverSound != null)
-            audioSource.PlayOneShot(gameOverSound);
+        }
         else
+        {
             Debug.LogWarning("GameOverSound belum diisi di Inspector!");
+        }
+
     }
 
     // game over funtion
@@ -64,9 +62,21 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseScreen.activeInHierarchy)
+            {
                 PauseGame(false);
+                if (audioManager != null && audioManager.openPause != null)
+                {
+                    audioManager.PlaySfx(audioManager.openPause);
+                }
+            }
             else
+            {
                 PauseGame(true);
+                if (audioManager != null && audioManager.closedPause != null)
+                {
+                    audioManager.PlaySfx(audioManager.closedPause);
+                }
+            }
         }
     }
 
