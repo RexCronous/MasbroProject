@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheckPos: {fileID: 8477499050404146395}
-  groundCheckSize: {x: 0.62, y: 0.02}
+  groundCheckSize: {x: 0.6, y: 0.02}
   groundLayer:
     serializedVersion: 2
     m_Bits: 72
