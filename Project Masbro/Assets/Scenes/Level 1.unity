@@ -854,7 +854,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e80dc41e824a3433db72e9af404296b0, type: 3}
   - {fileID: 8300000, guid: 82029aeee272e4a839f389d6eb223dbd, type: 3}
   run: {fileID: 8300000, guid: d525a51ce34534e6e8729c4c69e2b1f9, type: 3}
-  checkPoint: {fileID: 0}
+  checkPoint: {fileID: 8300000, guid: 6879755544e654c2eb01fef4ee9dcb27, type: 3}
   openPause: {fileID: 8300000, guid: dab34acdb1c57414789e5b92208c883e, type: 3}
   closedPause: {fileID: 8300000, guid: d6fc96b4f4ff94908bed477c9a0a92c0, type: 3}
 --- !u!4 &333248046
@@ -13615,7 +13615,7 @@ PrefabInstance:
     - target: {fileID: -6592132962426399194, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
       propertyPath: activatedSprite
       value: 
-      objectReference: {fileID: 4834915736717201033, guid: 8cafd4a1858ac594aa1495bc43847e07, type: 3}
+      objectReference: {fileID: -1983947350652909539, guid: c4490ff2fe96a824aab882fb1c8022ac, type: 3}
     - target: {fileID: -6592132962426399194, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
       propertyPath: altarItemRenderer
       value: 
