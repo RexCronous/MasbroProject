@@ -13,31 +13,18 @@ public class Checkpoint : MonoBehaviour
         Active
     }
     private SpawnSystem spawnSystem;
+    private AudioManager audioManager;
 
 
     [SerializeField] private ColliderState colliderState = ColliderState.Unclaimed;
 
-    private void Start()
-    {
-        // Get the SpriteRenderer component from the child named "altarItem"
-        altarItemRenderer = transform.Find("altarItem").GetComponent<SpriteRenderer>();
-        if (spawnSystem == null)
-        {
-            spawnSystem = FindFirstObjectByType<SpawnSystem>();
-            for (int i = 0; i < spawnSystem.checkpoint.Length; i++)
-            {
-                if (spawnSystem.checkpoint[i] == this.gameObject)
-                {
-                    checkpointIndex = i;
-                    print("Checkpoint Index: " + checkpointIndex);
-                    break;
-                }
-            }
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // print("colliderState: " + this.colliderState);
+        if (audioManager != null && this.colliderState != ColliderState.Active)
+            {
+                audioManager.PlaySfx(audioManager.checkPoint);
+            }
         if (other.gameObject.CompareTag("Player"))
         {
             spawnSystem = FindFirstObjectByType<SpawnSystem>();
@@ -58,6 +45,22 @@ public class Checkpoint : MonoBehaviour
     private void Awake()
     {
         lastColliderState = colliderState;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        altarItemRenderer = transform.Find("altarItem").GetComponent<SpriteRenderer>();
+        // Get the SpriteRenderer component from the child named "altarItem"
+        if (spawnSystem == null)
+        {
+            spawnSystem = FindFirstObjectByType<SpawnSystem>();
+            for (int i = 0; i < spawnSystem.checkpoint.Length; i++)
+            {
+                if (spawnSystem.checkpoint[i] == this.gameObject)
+                {
+                    checkpointIndex = i;
+                    print("Checkpoint Index: " + checkpointIndex);
+                    break;
+                }
+            }
+        }
     }
 
     private void Update()
