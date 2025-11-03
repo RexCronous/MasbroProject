@@ -5,19 +5,19 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    
+
     [Header("Game Settings")]
     public int maxLives = 3;
     public int lives;
     public int respawnDelay = 1; // in seconds
-    
+
     [Header("Player State")]
     public bool isHit = false;
     public bool isAtCheckpoint = false;
 
     [Header("Level Management")]
     public int currentSceneIndex;
-    
+
     // References to other managers
     private SpawnSystem spawnSystem;
     private UIManager uiManager;
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        
+
         uiManager = FindFirstObjectByType<UIManager>();
         spawnSystem = FindFirstObjectByType<SpawnSystem>();
 
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         await Task.Delay(respawnDelay * 1000); // Convert seconds to milliseconds
 
         if (lives > 1)
-        {    
+        {
             lives--;
             if (isAtCheckpoint)
             {
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
     }
 
     public async void NextLevel()
-    {   
+    {
         await Task.Delay(1 * 1000);
 
         currentSceneIndex++;
