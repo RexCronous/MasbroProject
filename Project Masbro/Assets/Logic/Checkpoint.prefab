@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3250161441942746767}
   - component: {fileID: 3229552157055120838}
   - component: {fileID: 3126379486560851267}
+  - component: {fileID: -6592132962426399194}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Checkpoint
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5349429136042890435}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.5, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -134,3 +135,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6592132962426399194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5349429136042890435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06714f21e249ffa4abfefbf1a7cc4fb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

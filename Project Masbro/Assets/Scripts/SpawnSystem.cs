@@ -26,23 +26,13 @@ public class SpawnSystem : MonoBehaviour
     public void NextCheckpoint()
     {
         NextIndex();
-        checkpoint[index].SetActive(false);
-    }
-
-    public void FirstCheckpoint()
-    {
-        checkpoint[index].SetActive(false);
     }
 
     private void NextIndex()
     {
         if (index < checkpoint.Length - 1)
-        {
             index++;
-        }
         else
-        {
             return;
-        }
     }
 }

@@ -13311,7 +13311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3250161441942746767, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3250161441942746767, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13345,7 +13345,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Checkpoint
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2512941046481027585, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
+    - {fileID: 4677625727394113775, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -207,21 +207,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // Reaching checkpoint
-        if (other.gameObject.CompareTag("Checkpoint"))
-        {
-            GameManager.Instance.SaveCheckpoint();
-        }
-
-        // Reaching finish line
-        if (other.gameObject.CompareTag("Finish"))
-        {
-            GameManager.Instance.NextLevel();
-        }
-    }
-
     // Buat bentuk visual gameobject di bawah player
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.white;

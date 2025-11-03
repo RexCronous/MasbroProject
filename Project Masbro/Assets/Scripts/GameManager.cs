@@ -71,10 +71,7 @@ public class GameManager : MonoBehaviour
     public void SaveCheckpoint()
     {
         if (!isAtCheckpoint)
-        {
-            spawnSystem.FirstCheckpoint();
             isAtCheckpoint = true;
-        }
         else
             spawnSystem.NextCheckpoint();
     }
