@@ -77,6 +77,13 @@ public class GameManager : MonoBehaviour
 
     public void FinishLevel()
     {
+        int levelUnlocked = PlayerPrefs.GetInt("LevelUnlocked", 1);
+
+        if (currentSceneIndex >= levelUnlocked)
+        {
+            PlayerPrefs.SetInt("LevelUnlocked", currentSceneIndex + 1);
+        }
+
         uiManager = uiManager ?? FindFirstObjectByType<UIManager>();
         uiManager?.Finish();
     }
