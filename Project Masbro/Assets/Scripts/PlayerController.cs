@@ -9,6 +9,12 @@ public class PlayerController : MonoBehaviour
     [Header("Ground Check")]
     [SerializeField] private Transform groundCheckPos;
     [SerializeField] private Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
+
+    [Header("Head Check")]
+    [SerializeField] private Transform headCheckPos;
+    [SerializeField] private Vector2 headCheckSize = new Vector2(0.2f, 0.05f);
+
+    [Header("Layers")]
     [SerializeField] private LayerMask groundLayer;
 
     [Header("Movement Parameters")]
@@ -156,6 +162,16 @@ public class PlayerController : MonoBehaviour
             // print("Not Grounded");
         }
 
+        // Head Checking
+        if (Physics2D.OverlapBox(headCheckPos.position, headCheckSize, 0, groundLayer) && !isGrounded)
+        {
+            GetComponent<CapsuleCollider2D>().enabled = false;
+        }
+        else
+        {
+            GetComponent<CapsuleCollider2D>().enabled = true;
+        }
+
         //Flip player direction
         if (horizontalInput > 0.01f)
         {
@@ -253,5 +269,6 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.white;
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
+        Gizmos.DrawWireCube(headCheckPos.position, headCheckSize);
     }
 }
