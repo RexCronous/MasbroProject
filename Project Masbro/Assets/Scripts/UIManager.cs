@@ -7,6 +7,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
     [Header("Pause")]
     [SerializeField] private GameObject pauseScreen;
+    [Header("Finish")]
+    [SerializeField] private GameObject finishScreen;
     AudioManager audioManager;
 
     private void Awake()
@@ -15,6 +17,7 @@ public class UIManager : MonoBehaviour
 
         gameOverScreen.SetActive(false);
         pauseScreen.SetActive(false);
+        finishScreen.SetActive(false);
     }
     #region  Game Over
     public void GameOver()
@@ -32,6 +35,26 @@ public class UIManager : MonoBehaviour
             Debug.LogWarning("GameOverSound belum diisi di Inspector!");
         }
 
+    }
+
+    public void Finish()
+    {
+        if (finishScreen != null)
+        {
+            finishScreen.SetActive(true);
+        }
+    }
+
+    public void NextLevel()
+    {
+        int currentSceneIndex = GameManager.Instance.currentSceneIndex;
+
+        currentSceneIndex++;
+        if (currentSceneIndex >= SceneManager.sceneCountInBuildSettings)
+        {
+            currentSceneIndex = 0; // Kembali ke menu utama atau scene pertama
+        }
+        SceneManager.LoadScene(currentSceneIndex);
     }
 
     // game over funtion

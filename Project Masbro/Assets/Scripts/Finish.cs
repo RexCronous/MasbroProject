@@ -10,7 +10,7 @@ public class Finish : MonoBehaviour
         {
             colliderState = false;
             GetComponent<Collider2D>().enabled = colliderState;
-            GameManager.Instance.NextLevel();
+            GameManager.Instance.FinishLevel();
         }
     }
 }

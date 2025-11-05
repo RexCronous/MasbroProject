@@ -75,6 +75,12 @@ public class GameManager : MonoBehaviour
         isAtCheckpoint = true;
     }
 
+    public void FinishLevel()
+    {
+        uiManager = uiManager ?? FindFirstObjectByType<UIManager>();
+        uiManager?.Finish();
+    }
+
     public async void Respawn()
     {
         await Task.Delay(respawnDelay * 1000); // Convert seconds to milliseconds
@@ -99,17 +105,5 @@ public class GameManager : MonoBehaviour
         }
 
         isHit = false;
-    }
-
-    public async void NextLevel()
-    {
-        await Task.Delay(1 * 1000);
-
-        currentSceneIndex++;
-        if (currentSceneIndex >= SceneManager.sceneCountInBuildSettings)
-        {
-            currentSceneIndex = 0; // Kembali ke menu utama atau scene pertama
-        }
-        SceneManager.LoadScene(currentSceneIndex);
     }
 }
