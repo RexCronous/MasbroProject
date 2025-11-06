@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
         // Simpan waktu tercepat baru bila lebih baik
         if (fastestTime == 0f || elapsedTime < fastestTime)
         {
+            fastestTime = elapsedTime;
             PlayerPrefs.SetFloat(key, elapsedTime);
         }
 
