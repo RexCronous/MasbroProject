@@ -56,7 +56,7 @@ public class Checkpoint : MonoBehaviour
                 if (spawnSystem.checkpoint[i] == this.gameObject)
                 {
                     checkpointIndex = i;
-                    print("Checkpoint Index: " + checkpointIndex);
+                    // print("Checkpoint Index: " + checkpointIndex);
                     break;
                 }
             }

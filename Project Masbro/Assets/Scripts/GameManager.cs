@@ -18,6 +18,15 @@ public class GameManager : MonoBehaviour
     [Header("Level Management")]
     public int currentSceneIndex;
 
+    [Header("Timer")]
+    public float elapsedTime = 0f;
+    public float fastestTime = 0f; 
+    
+    [Header("Level Progression")]
+    public int levelUnlocked; 
+    public string key; 
+    private bool levelFinished = false;
+
     // References to other managers
     private SpawnSystem spawnSystem;
     private UIManager uiManager;
@@ -40,6 +49,14 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    void Update()
+    {
+        if (!levelFinished)
+        {
+            elapsedTime += Time.deltaTime;
+        }
+    }
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded; // hapus event listener
@@ -57,6 +74,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        
+        elapsedTime = 0f;
+        levelFinished = false;
 
         uiManager = FindFirstObjectByType<UIManager>();
         spawnSystem = FindFirstObjectByType<SpawnSystem>();
@@ -73,6 +93,29 @@ public class GameManager : MonoBehaviour
         spawnSystem = FindFirstObjectByType<SpawnSystem>();
         spawnSystem.index = Index;
         isAtCheckpoint = true;
+    }
+
+    public void FinishLevel()
+    {
+        levelFinished = true;
+
+        levelUnlocked = PlayerPrefs.GetInt("LevelUnlocked", 1);
+        key = "FastestTime_Level" + currentSceneIndex;
+        fastestTime = PlayerPrefs.GetFloat(key, 0f);
+
+        if (currentSceneIndex >= levelUnlocked)
+        {
+            PlayerPrefs.SetInt("LevelUnlocked", currentSceneIndex + 1);
+        }
+
+        // Simpan waktu tercepat baru bila lebih baik
+        if (fastestTime == 0f || elapsedTime < fastestTime)
+        {
+            PlayerPrefs.SetFloat(key, elapsedTime);
+        }
+
+        uiManager = uiManager ?? FindFirstObjectByType<UIManager>();
+        uiManager?.Finish();
     }
 
     public async void Respawn()
@@ -99,17 +142,5 @@ public class GameManager : MonoBehaviour
         }
 
         isHit = false;
-    }
-
-    public async void NextLevel()
-    {
-        await Task.Delay(1 * 1000);
-
-        currentSceneIndex++;
-        if (currentSceneIndex >= SceneManager.sceneCountInBuildSettings)
-        {
-            currentSceneIndex = 0; // Kembali ke menu utama atau scene pertama
-        }
-        SceneManager.LoadScene(currentSceneIndex);
     }
 }

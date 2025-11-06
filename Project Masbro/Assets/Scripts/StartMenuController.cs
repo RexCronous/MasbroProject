@@ -7,7 +7,7 @@ public class StartMenuController : MonoBehaviour
     {
         print("start");
         Time.timeScale = 1f;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("SelectLevel");
     }
 
     public void OnExitClick()
