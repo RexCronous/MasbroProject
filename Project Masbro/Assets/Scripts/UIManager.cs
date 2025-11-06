@@ -42,6 +42,7 @@ public class UIManager : MonoBehaviour
         if (finishScreen != null)
         {
             finishScreen.SetActive(true);
+            finishScreen.GetComponent<LevelTimer>()?.FinishLevel();
         }
     }
 

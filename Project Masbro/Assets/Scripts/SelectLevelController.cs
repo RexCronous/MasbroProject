@@ -44,6 +44,11 @@ public class SelectLevelController : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("LevelUnlocked");
         SceneManager.LoadScene("SelectLevel");
+
+        for (int i = 1; i < SceneManager.sceneCountInBuildSettings - 1; i++)
+        {
+            PlayerPrefs.DeleteKey("FastestTime_Level" + i);
+        }
     }
 
     public void OnConfirmNo()
