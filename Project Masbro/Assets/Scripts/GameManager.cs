@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     private int checkpointsReached = 0;
     private string key; 
     private bool levelFinished = false;
+    [HideInInspector] public bool atTutorial = false;
 
     // References to other managers
     private SpawnSystem spawnSystem;
@@ -79,6 +80,15 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        if (currentSceneIndex == SceneManager.sceneCountInBuildSettings - 2) // Tutorial level
+        {
+            atTutorial = true;
+        }
+        else
+        {
+            atTutorial = false;
+        }
         
         elapsedTime = 0f;
         levelFinished = false;
@@ -116,7 +126,12 @@ public class GameManager : MonoBehaviour
         key = "FastestTime_Level" + currentSceneIndex;
         fastestTime = PlayerPrefs.GetFloat(key, elapsedTime);
 
-        if (currentSceneIndex >= levelUnlocked)
+        if (atTutorial) // Tutorial level completed
+        {
+            print("Tutorial Completed");
+            PlayerPrefs.SetInt("LevelUnlocked", 1);
+        }
+        else if (currentSceneIndex >= levelUnlocked) // Unlock next level
         {
             PlayerPrefs.SetInt("LevelUnlocked", currentSceneIndex + 1);
         }

@@ -50,7 +50,7 @@ public class SelectLevelController : MonoBehaviour
             PlayerPrefs.DeleteKey("FastestTime_Level" + i);
         }
 
-        SceneManager.LoadScene("SelectLevel");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void OnConfirmNo()

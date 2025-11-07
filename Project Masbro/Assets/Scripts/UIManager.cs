@@ -55,12 +55,20 @@ public class UIManager : MonoBehaviour
 
     public void NextLevel()
     {
-        int currentSceneIndex = GameManager.Instance.currentSceneIndex;
-
-        currentSceneIndex++;
-        if (currentSceneIndex >= SceneManager.sceneCountInBuildSettings - 1)
+        int currentSceneIndex;
+        if (GameManager.Instance.atTutorial)
         {
-            currentSceneIndex = 0; // Kembali ke menu utama atau scene pertama
+            currentSceneIndex = 1;
+        }
+        else
+        {
+            currentSceneIndex = GameManager.Instance.currentSceneIndex;
+
+            currentSceneIndex++;
+            if (currentSceneIndex >= SceneManager.sceneCountInBuildSettings - 2)
+            {
+                currentSceneIndex = 0; // Kembali ke menu utama atau scene pertama
+            }
         }
 
         SceneManager.LoadScene(currentSceneIndex);
