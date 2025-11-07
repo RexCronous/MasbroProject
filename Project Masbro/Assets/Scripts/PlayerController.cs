@@ -18,27 +18,28 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     [Header("Movement Parameters")]
-    [SerializeField] private float movSpeed = 10.0f;
-    [SerializeField] private float runSpeed = 20.0f;
+    // [SerializeField] private float movSpeed = 10.0f;
+    // [SerializeField] private float runSpeed = 20.0f;
     // [SerializeField] private float airTime = 0f;
-    [SerializeField] private float normalJumpForce = 5.0f;
-    [SerializeField] private float runJumpForce = 8.0f;
+    // [SerializeField] private float normalJumpForce = 5.0f;
+    [SerializeField] private float jumpForce = 8.0f;
     [SerializeField] private int maxJump = 1;
+    [SerializeField] private float acceleration = 5.0f;
+    [SerializeField] private float deceleration = 8.0f;
+    [SerializeField] private float maxVelocityX = 11.0f;
     [SerializeField] private float maxVelocityY = 15f;
 
     [Header("Animation & Feedback")]
     [SerializeField] private Animator animator;
     public ParticleSystem SmokeFX;
-    //private int groundContacts = 0;
 
     private Rigidbody2D rb;
     private int jumpCount = 0;
-    private bool runBeforeJump = false;
+    // private bool runBeforeJump = false;
     private bool isGrounded = false;
     AudioManager audioManager;
     private float nextFootstepTime = 0f;
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -49,56 +50,32 @@ public class PlayerController : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Ambil Input
         float horizontalInput = Input.GetAxis("Horizontal");
-        bool isRunning = Input.GetAxis("Run") > 0;
-        bool isCrouching = Input.GetKey(KeyCode.C);
         bool jumpPressed = Input.GetButtonDown("Jump");
         bool inputLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
         bool inputRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
 
-        // audioManager.PlaySfx(audioManager.walking);
-        // audioManager.PlaySfx(audioManager.run);
-        // Mengecek apakah player sedang di tanah (grounded)
-        if (isGrounded)
-        {
-            // Simpan status apakah player sedang berlari sebelum melakukan lompatan
-            runBeforeJump = isRunning;
-        }
-
-        // Speed modifier
-        float currentSpeed = 0f;
-
-        // Menentukan kecepatan berdasarkan kondisi grounded atau tidak
-        if (isGrounded)
-        {
-            // Jika player masih menyentuh tanah:
-            // Gunakan kecepatan sesuai input saat ini (running atau normal)
-            currentSpeed = isRunning ? runSpeed : movSpeed;
-        }
-        else
-        {
-            // Jika player sedang di udara:
-            // Gunakan kecepatan berdasarkan status sebelum melompat
-            // (tidak bisa mengubah dari jalan ke lari di udara)
-            currentSpeed = runBeforeJump ? runSpeed : movSpeed;
-        }
-
+        // bool isRunning = Input.GetAxis("Run") > 0;
+        // bool isCrouching = Input.GetKey(KeyCode.C);
 
         // Update Velocity
         Vector2 velocity = rb.linearVelocity;
 
+        float targetSpeedX = horizontalInput * maxVelocityX;
+
         if (inputLeft && inputRight)
             velocity.x = Mathf.Lerp(velocity.x, 0.0f, 6f * Time.deltaTime);
+        else if (inputLeft || inputRight)
+            velocity.x = Mathf.Lerp(velocity.x, targetSpeedX, acceleration * Time.deltaTime); // acceleration
         else
-            velocity.x = horizontalInput * currentSpeed;
-
-        if (Mathf.Abs(velocity.x) > 0f && Mathf.Abs(velocity.x) < 0.7f)
         {
-            velocity.x = 0f;
+            if (Mathf.Abs(velocity.x) > 0f && Mathf.Abs(velocity.x) < 0.7f)
+                velocity.x = 0f;
+            else
+                velocity.x = Mathf.Lerp(velocity.x, 0.0f, deceleration * Time.deltaTime); // deceleration
         }
 
         // Double Jump Logic
@@ -116,51 +93,27 @@ public class PlayerController : MonoBehaviour
             {
                 audioManager.PlaySfx(audioManager.jump);
             }
-            if (jumpCount == 0)
-            {
-                velocity.y = isRunning && (Mathf.Abs(velocity.x) > movSpeed) ? runJumpForce : normalJumpForce;
-            }
-            else if (jumpCount > 0 && !isGrounded)
-            {
-                velocity.y = normalJumpForce;
-            }
+            velocity.y = jumpForce;
             jumpCount++;
         }
 
-        // Sedikit mengurangi kecepatan horizontal saat lari lalu melompat
-        // if (!isGrounded && Mathf.Abs(velocity.x) > movSpeed)
-        // {
-        //     float targetSpeed = Mathf.Sign(velocity.x) * movSpeed;
-        //     velocity.x = Mathf.Lerp(velocity.x, targetSpeed, Time.deltaTime * 50f);
-        // }
-
-        // Biar tidak jatuh/naik terlalu cepat
+        // Batas kecepatan
+        velocity.x = Mathf.Clamp(velocity.x, -maxVelocityX, maxVelocityX);
         velocity.y = Mathf.Clamp(velocity.y, -maxVelocityY, maxVelocityY);
 
         if (velocity.y > 0)
         {
-            // Falling faster
             velocity.y += Physics2D.gravity.y * Time.deltaTime * 1.5f;
         }
         else if (velocity.y < 0)
         {
-            // Jump cut
             velocity.y += Physics2D.gravity.y * Time.deltaTime * 2f;
         }
 
         rb.linearVelocity = velocity;
 
         // Ground Checking
-        if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
-        {
-            isGrounded = true;
-            // print("Grounded");
-        }
-        else
-        {
-            isGrounded = false;
-            // print("Not Grounded");
-        }
+        isGrounded = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer);
 
         // Head Checking
         if (Physics2D.OverlapBox(headCheckPos.position, headCheckSize, 0, groundLayer) && !isGrounded)
@@ -172,7 +125,7 @@ public class PlayerController : MonoBehaviour
             GetComponent<CapsuleCollider2D>().enabled = true;
         }
 
-        //Flip player direction
+        // Flip player direction
         if (horizontalInput > 0.01f)
         {
             transform.localScale = new Vector3(1, 1, 1);
@@ -182,27 +135,23 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
-        // Movement SFX with delay and random selection for walking
+        // Movement SFX (running)
         bool isMovingNow = isGrounded && Mathf.Abs(rb.linearVelocity.x) > 0.1f;
         if (isMovingNow && Time.time >= nextFootstepTime)
         {
-            if (isRunning)
+            // if (isRunning) 
+            // { 
+            // // if (audioManager != null && audioManager.run != null) 
+            // // { 
+            // // // audioManager.PlaySfx(audioManager.run); 
+            // // // nextFootstepTime = Time.time + 0.8f; // 500ms delay 
+            // // } 
+            // }
+            if (audioManager != null && audioManager.walking != null && audioManager.walking.Length > 0)
             {
-                // if (audioManager != null && audioManager.run != null)
-                // {
-                //     audioManager.PlaySfx(audioManager.run);
-                //     nextFootstepTime = Time.time + 0.8f; // 500ms delay
-                // }
-            }
-            else
-            {
-                if (audioManager != null && audioManager.walking != null && audioManager.walking.Length > 0)
-                {
-                    // Randomly select a walking sound from the array
-                    AudioClip randomWalkClip = audioManager.walking[UnityEngine.Random.Range(0, audioManager.walking.Length)];
-                    audioManager.PlaySfx(randomWalkClip);
-                    nextFootstepTime = Time.time + 0.80f; // 500ms delay
-                }
+                AudioClip randomWalkClip = audioManager.walking[UnityEngine.Random.Range(0, audioManager.walking.Length)];
+                audioManager.PlaySfx(randomWalkClip);
+                nextFootstepTime = Time.time + 0.80f;
             }
         }
 
@@ -224,10 +173,11 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isFalling", false);
         }
 
-        //Animator controller
+        // Animator controller
         animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocityX));
 
-        if (isRunning && !SmokeFX.isPlaying && Mathf.Abs(rb.linearVelocityX) > 0)
+        // Efek smoke saat bergerak
+        if (!SmokeFX.isPlaying && Mathf.Abs(rb.linearVelocityX) > 0)
         {
             SmokeFX.Play();
         }
@@ -235,8 +185,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        // touchingLeftWall = false;
-        // touchingRightWall = false;
+        // Tidak digunakan
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -248,23 +197,19 @@ public class PlayerController : MonoBehaviour
             {
                 foreach (ContactPoint2D contact in collision.contacts)
                 {
-                    // Cek arah normal tabrakan
-                    // Normal ke atas (y > 0.5) artinya player di atas box → jangan dorong
                     if (contact.normal.y > 0.5f)
                     {
-                        return; // keluar, tidak dorong
+                        return;
                     }
                 }
 
-                // Kalau bukan di atas (berarti di samping), baru dorong
-                float pushPower = 0.5f; // kecil = berat
+                float pushPower = 0.5f;
                 Vector2 pushDir = new Vector2(rb.linearVelocity.x, 0);
                 boxRb.linearVelocity = new Vector2(pushDir.x * pushPower, boxRb.linearVelocity.y);
             }
         }
     }
 
-    // Buat bentuk visual gameobject di bawah player
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;

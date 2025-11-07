@@ -182,17 +182,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheckPos: {fileID: 8477499050404146395}
-  groundCheckSize: {x: 0.6, y: 0.02}
+  groundCheckSize: {x: 0.63, y: 0.05}
   headCheckPos: {fileID: 3350802594287814211}
   headCheckSize: {x: 0.2, y: 0.03}
   groundLayer:
     serializedVersion: 2
     m_Bits: 72
-  movSpeed: 8
-  runSpeed: 12
-  normalJumpForce: 8
+  movSpeed: 15
   runJumpForce: 9
   maxJump: 1
+  acceleration: 10
+  deceleration: 6
+  maxVelocityX: 12
   maxVelocityY: 20
   animator: {fileID: 3898950732275401989}
   SmokeFX: {fileID: 1905659679170778393}
@@ -5125,7 +5126,7 @@ Transform:
   m_GameObject: {fileID: 2362808737940351470}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.11, y: -0.484, z: 0}
+  m_LocalPosition: {x: -0.12, y: -0.484, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
