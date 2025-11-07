@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro; 
 
 public class UIManager : MonoBehaviour
 {
@@ -9,7 +10,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pauseScreen;
     [Header("Finish")]
     [SerializeField] private GameObject finishScreen;
-    AudioManager audioManager;
+    [Header("Timer")]
+    [SerializeField] private TextMeshProUGUI timerText;
+    [Header("Progress")]
+    [SerializeField] private TextMeshProUGUI progressText;
+    
+    private AudioManager audioManager;
 
     private void Awake()
     {
@@ -19,6 +25,7 @@ public class UIManager : MonoBehaviour
         pauseScreen.SetActive(false);
         finishScreen.SetActive(false);
     }
+
     #region  Game Over
     public void GameOver()
     {
@@ -81,6 +88,18 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
+    public void UpdateProgress(int checkpointsReached, int totalCheckpoints)
+    {
+        progressText.text = $"{checkpointsReached}/{totalCheckpoints}";
+    }
+
+    public void UpdateTimer(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60f);
+        int seconds = Mathf.FloorToInt(time % 60f);
+
+        timerText.text = $"{minutes:00}:{seconds:00}";
+    }
 
     private void Update()
     {

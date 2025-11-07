@@ -17,14 +17,16 @@ public class GameManager : MonoBehaviour
 
     [Header("Level Management")]
     public int currentSceneIndex;
+    public int numberOfCheckpoints;
 
     [Header("Timer")]
     public float elapsedTime = 0f;
     public float fastestTime = 0f; 
     
-    [Header("Level Progression")]
-    public int levelUnlocked; 
-    public string key; 
+    // Level Progression
+    private int levelUnlocked; 
+    private int checkpointsReached = 0;
+    private string key; 
     private bool levelFinished = false;
 
     // References to other managers
@@ -54,6 +56,9 @@ public class GameManager : MonoBehaviour
         if (!levelFinished)
         {
             elapsedTime += Time.deltaTime;
+            uiManager = uiManager ?? FindFirstObjectByType<UIManager>();
+            uiManager?.UpdateProgress(checkpointsReached, numberOfCheckpoints);
+            uiManager?.UpdateTimer(elapsedTime);
         }
     }
 
@@ -81,6 +86,9 @@ public class GameManager : MonoBehaviour
         uiManager = FindFirstObjectByType<UIManager>();
         spawnSystem = FindFirstObjectByType<SpawnSystem>();
 
+        numberOfCheckpoints = spawnSystem.checkpoint.Length;
+        checkpointsReached = 0;
+
         lives = maxLives;
         isAtCheckpoint = false;
         isHit = false;
@@ -91,6 +99,11 @@ public class GameManager : MonoBehaviour
     public void SaveCheckpoint(int Index)
     {
         spawnSystem = FindFirstObjectByType<SpawnSystem>();
+        if (Index > spawnSystem.previousIndex)
+        {
+            spawnSystem.previousIndex = Index;
+            checkpointsReached++;
+        }
         spawnSystem.index = Index;
         isAtCheckpoint = true;
     }
@@ -101,7 +114,7 @@ public class GameManager : MonoBehaviour
 
         levelUnlocked = PlayerPrefs.GetInt("LevelUnlocked", 1);
         key = "FastestTime_Level" + currentSceneIndex;
-        fastestTime = PlayerPrefs.GetFloat(key, 0f);
+        fastestTime = PlayerPrefs.GetFloat(key, elapsedTime);
 
         if (currentSceneIndex >= levelUnlocked)
         {
@@ -109,7 +122,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Simpan waktu tercepat baru bila lebih baik
-        if (fastestTime == 0f || elapsedTime < fastestTime)
+        if (elapsedTime < fastestTime)
         {
             fastestTime = elapsedTime;
             PlayerPrefs.SetFloat(key, elapsedTime);

@@ -169,6 +169,9 @@ MonoBehaviour:
   isHit: 0
   isAtCheckpoint: 0
   currentSceneIndex: 1
+  numberOfCheckpoints: 0
+  elapsedTime: 0
+  fastestTime: 0
 --- !u!1001 &154694252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10387,6 +10390,17 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 7951977195128568038, guid: 2f742172d55a6f44095e483af74f5270, type: 3}
   m_PrefabInstance: {fileID: 858296924972387050}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1782321764 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8873495122082466958, guid: 04358331f00240646adcb236d476ec2e, type: 3}
+  m_PrefabInstance: {fileID: 8884043632729006463}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2016933388
 GameObject:
   m_ObjectHideFlags: 0
@@ -12854,15 +12868,54 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3482938252987157416, guid: 04358331f00240646adcb236d476ec2e, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3482938252987157416, guid: 04358331f00240646adcb236d476ec2e, type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 3822802646394223012, guid: 04358331f00240646adcb236d476ec2e, type: 3}
       propertyPath: m_Name
       value: UICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5858277561054280172, guid: 04358331f00240646adcb236d476ec2e, type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 1782321764}
+    - target: {fileID: 5858277561054280172, guid: 04358331f00240646adcb236d476ec2e, type: 3}
+      propertyPath: progressText
+      value: 
+      objectReference: {fileID: 8884043632729006464}
+    - target: {fileID: 8827044768058379954, guid: 04358331f00240646adcb236d476ec2e, type: 3}
+      propertyPath: m_Name
+      value: Progress
+      objectReference: {fileID: 0}
+    - target: {fileID: 8873495122082466958, guid: 04358331f00240646adcb236d476ec2e, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8873495122082466958, guid: 04358331f00240646adcb236d476ec2e, type: 3}
+      propertyPath: m_fontSize
+      value: 36
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04358331f00240646adcb236d476ec2e, type: 3}
+--- !u!114 &8884043632729006464 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3482938252987157416, guid: 04358331f00240646adcb236d476ec2e, type: 3}
+  m_PrefabInstance: {fileID: 8884043632729006463}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

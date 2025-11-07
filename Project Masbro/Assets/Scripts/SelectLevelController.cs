@@ -10,9 +10,11 @@ public class SelectLevelController : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button[] levelButtons;
 
+    private int levelUnlocked;
+
     private void Start()
     {
-        int levelUnlocked = PlayerPrefs.GetInt("LevelUnlocked", 1);
+        levelUnlocked = PlayerPrefs.GetInt("LevelUnlocked", 1);
         print("Level Unlocked: " + levelUnlocked);
 
         for (int i = 0; i < levelButtons.Length; i++)
@@ -43,12 +45,12 @@ public class SelectLevelController : MonoBehaviour
     public void OnConfirmYes()
     {
         PlayerPrefs.DeleteKey("LevelUnlocked");
-        SceneManager.LoadScene("SelectLevel");
-
-        for (int i = 1; i < SceneManager.sceneCountInBuildSettings - 1; i++)
+        for (int i = 1; i < levelUnlocked; i++)
         {
             PlayerPrefs.DeleteKey("FastestTime_Level" + i);
         }
+
+        SceneManager.LoadScene("SelectLevel");
     }
 
     public void OnConfirmNo()

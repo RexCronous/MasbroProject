@@ -372,6 +372,9 @@ MonoBehaviour:
   isHit: 0
   isAtCheckpoint: 0
   currentSceneIndex: 1
+  numberOfCheckpoints: 0
+  elapsedTime: 0
+  fastestTime: 0
 --- !u!1001 &160204212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54992,6 +54995,7 @@ MonoBehaviour:
   - {fileID: 191917457}
   - {fileID: 1917575881}
   index: 0
+  previousIndex: -1
 --- !u!4 &1250690426
 Transform:
   m_ObjectHideFlags: 0

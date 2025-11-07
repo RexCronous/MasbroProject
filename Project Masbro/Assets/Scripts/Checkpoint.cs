@@ -21,12 +21,13 @@ public class Checkpoint : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // print("colliderState: " + this.colliderState);
-        if (audioManager != null && this.colliderState != ColliderState.Active)
+        if (other.gameObject.CompareTag("Player"))
+        {
+            if (audioManager != null && this.colliderState != ColliderState.Active)
             {
                 audioManager.PlaySfx(audioManager.checkPoint);
             }
-        if (other.gameObject.CompareTag("Player"))
-        {
+            
             spawnSystem = FindFirstObjectByType<SpawnSystem>();
             for (int i = 0; i < spawnSystem.checkpoint.Length; i++)
             {
