@@ -3,8 +3,23 @@ using UnityEngine.SceneManagement;
 
 public class StartMenuController : MonoBehaviour
 {
+    [Header("Panels")]
+    [SerializeField] private GameObject SettingsPanel;
+
     private int levelUnlocked;
 
+    private void Start()
+    {
+        if (SettingsPanel != null)
+        {
+            SettingsPanel.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("Settings Panel is not assigned in StartMenuController!");
+        }
+    }
+    
     public void OnStartClick()
     {
         print("start");
@@ -29,5 +44,17 @@ public class StartMenuController : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
         print("exit");
+    }
+
+    public void OnSettingClick()
+    {
+        print("setting");
+        // Time.timeScale = 1f;
+        SettingsPanel.SetActive(true);
+    }
+
+    public void OnBackClick()
+    {
+        SettingsPanel.SetActive(false);
     }
 }

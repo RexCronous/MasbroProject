@@ -14,15 +14,25 @@ public class SelectLevelController : MonoBehaviour
 
     private void Start()
     {
-        levelUnlocked = PlayerPrefs.GetInt("LevelUnlocked", 1);
-        print("Level Unlocked: " + levelUnlocked);
-
-        for (int i = 0; i < levelButtons.Length; i++)
+        if (levelButtons != null && levelButtons.Length > 0)
         {
-            if (i + 1 <= levelUnlocked)
+            // Check setiap level button
+            for (int i = 0; i < levelButtons.Length; i++)
             {
-                levelButtons[i].interactable = true;
+                int levelNum = i + 1;
+                if (levelButtons[i] != null)
+                {
+                    // Cek status unlock untuk setiap level
+                    bool isUnlocked = (levelNum == 1) || (PlayerPrefs.GetInt($"Level{levelNum}_Unlocked", 0) == 1);
+                    levelButtons[i].interactable = isUnlocked;
+
+                    Debug.Log($"Level {levelNum} - Unlock Status: {isUnlocked}");
+                }
             }
+        }
+        else
+        {
+            Debug.LogWarning("Level buttons array is empty or not assigned in SelectLevelController!");
         }
 
         confirmPanel.SetActive(false);
@@ -44,13 +54,32 @@ public class SelectLevelController : MonoBehaviour
 
     public void OnConfirmYes()
     {
-        PlayerPrefs.DeleteKey("LevelUnlocked");
-        for (int i = 1; i < levelUnlocked; i++)
+        // Reset semua progress
+        for (int i = 1; i <= levelButtons.Length; i++)
         {
-            PlayerPrefs.DeleteKey("FastestTime_Level" + i);
+            // Hapus status unlock level (kecuali level 1)
+            if (i > 1)
+            {
+                PlayerPrefs.DeleteKey($"Level{i}_Unlocked");
+            }
+
+            // Hapus progress bintang
+            PlayerPrefs.DeleteKey($"Level{i}_Progress");
+
+            // Hapus waktu tercepat
+            PlayerPrefs.DeleteKey($"FastestTime_Level{i}");
         }
 
-        SceneManager.LoadScene("MainMenu");
+        // Set ulang level 1 ke terbuka
+        PlayerPrefs.SetInt("Level1_Unlocked", 1);
+
+        // Pastikan perubahan tersimpan
+        PlayerPrefs.Save();
+
+        Debug.Log("Semua progress level telah direset");
+
+        // Reload scene
+        SceneManager.LoadScene("Scenes/SelectLevel");
     }
 
     public void OnConfirmNo()

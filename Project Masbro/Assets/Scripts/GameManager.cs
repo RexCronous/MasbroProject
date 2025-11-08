@@ -21,14 +21,18 @@ public class GameManager : MonoBehaviour
 
     [Header("Timer")]
     public float elapsedTime = 0f;
-    public float fastestTime = 0f; 
-    
+    public float fastestTime = 0f;
+
     // Level Progression
-    private int levelUnlocked; 
+    private int levelUnlocked;
     private int checkpointsReached = 0;
-    private string key; 
+    private string key;
     private bool levelFinished = false;
     [HideInInspector] public bool atTutorial = false;
+
+    // Properties untuk StarBar
+    public int CheckpointsReached => checkpointsReached;
+    public int TotalCheckpoints => numberOfCheckpoints;
 
     // References to other managers
     private SpawnSystem spawnSystem;
@@ -122,7 +126,15 @@ public class GameManager : MonoBehaviour
     {
         levelFinished = true;
 
-        levelUnlocked = PlayerPrefs.GetInt("LevelUnlocked", 1);
+        // Simpan progress checkpoint untuk star bar
+        float progress = (float)checkpointsReached / numberOfCheckpoints;
+        PlayerPrefs.SetFloat($"Level{currentSceneIndex}_Progress", progress);
+
+        // Unlock level berikutnya
+        int nextLevel = currentSceneIndex + 1;
+        PlayerPrefs.SetInt($"Level{nextLevel}_Unlocked", 1);
+
+        // Simpan waktu tercepat
         key = "FastestTime_Level" + currentSceneIndex;
         fastestTime = PlayerPrefs.GetFloat(key, elapsedTime);
 
@@ -142,6 +154,11 @@ public class GameManager : MonoBehaviour
             fastestTime = elapsedTime;
             PlayerPrefs.SetFloat(key, elapsedTime);
         }
+
+        // Pastikan perubahan tersimpan
+        PlayerPrefs.Save();
+
+        Debug.Log($"Level {currentSceneIndex} selesai - Progress: {progress}, Unlocking Level {nextLevel}");
 
         uiManager = uiManager ?? FindFirstObjectByType<UIManager>();
         uiManager?.Finish();
