@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro; 
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
     [Header("Progress")]
     [SerializeField] private TextMeshProUGUI progressText;
-    
+
     private AudioManager audioManager;
 
     private void Awake()
