@@ -6,7 +6,7 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] private Sprite claimedSprite; // New sprite when checkpoint is activated
     [SerializeField] private Sprite activatedSprite; // New sprite when checkpoint is activated
     [SerializeField] private int checkpointIndex; // Index of this checkpoint
-    private enum ColliderState
+    public enum ColliderState
     {
         Unclaimed,
         Claimed,
@@ -16,51 +16,34 @@ public class Checkpoint : MonoBehaviour
     private AudioManager audioManager;
 
 
-    [SerializeField] private ColliderState colliderState = ColliderState.Unclaimed;
+    [SerializeField] public ColliderState colliderState = ColliderState.Unclaimed;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && colliderState != ColliderState.Active)
+        // print("colliderState: " + this.colliderState);
+        if (other.gameObject.CompareTag("Player"))
         {
-            if (audioManager != null)
-                audioManager.PlaySfx(audioManager.checkPoint);
-
-            spawnSystem = FindFirstObjectByType<SpawnSystem>();
-
-            if (spawnSystem.previousIndex >= 0)
+            if (audioManager != null && this.colliderState != ColliderState.Active)
             {
-                var previousCheckpoint = spawnSystem.checkpoint[spawnSystem.previousIndex].GetComponent<Checkpoint>();
-                previousCheckpoint.colliderState = ColliderState.Claimed;
+                audioManager.PlaySfx(audioManager.checkPoint);
             }
-
-            // Aktifkan checkpoint ini
-            colliderState = ColliderState.Active;
-            GameManager.Instance.SaveCheckpoint(checkpointIndex);
+            
+            spawnSystem = FindFirstObjectByType<SpawnSystem>();
+            for (int i = 0; i < spawnSystem.checkpoint.Length; i++)
+            {
+                ColliderState isClaimed = spawnSystem.checkpoint[i].GetComponent<Checkpoint>().colliderState;
+                if (isClaimed == ColliderState.Active)
+                {
+                    spawnSystem.checkpoint[i].GetComponent<Checkpoint>().colliderState = ColliderState.Claimed;
+                }
+                if (spawnSystem.checkpoint[i] == this.gameObject)
+                {
+                    spawnSystem.checkpoint[i].GetComponent<Checkpoint>().colliderState = ColliderState.Active;
+                    GameManager.Instance.SaveCheckpoint(checkpointIndex);
+                }
+            }
         }
     }
-
-    // private void OnTriggerEnter2D(Collider2D other)
-    // {
-    //     // print("colliderState: " + this.colliderState);
-    //     if (audioManager != null && this.colliderState != ColliderState.Active)
-    //     {
-    //         audioManager.PlaySfx(audioManager.checkPoint);
-    //     }
-    //     if (other.gameObject.CompareTag("Player"))
-    //     {
-    //         print("Checkpoint reached at index: " + checkpointIndex);
-    //         spawnSystem = FindFirstObjectByType<SpawnSystem>();
-    //         for (int i = 0; i < spawnSystem.checkpoint.Length; i++)
-    //         {
-    //             spawnSystem.checkpoint[i].GetComponent<Checkpoint>().colliderState = ColliderState.Claimed;
-    //             if (spawnSystem.checkpoint[i] == this.gameObject)
-    //             {
-    //                 spawnSystem.checkpoint[i].GetComponent<Checkpoint>().colliderState = ColliderState.Active;
-    //                 GameManager.Instance.SaveCheckpoint(checkpointIndex);
-    //             }
-    //         }
-    //     }
-    // }
 
     private ColliderState lastColliderState;
 
@@ -73,15 +56,15 @@ public class Checkpoint : MonoBehaviour
         if (spawnSystem == null)
         {
             spawnSystem = FindFirstObjectByType<SpawnSystem>();
-            // for (int i = 0; i < spawnSystem.checkpoint.Length; i++)
-            // {
-            //     if (spawnSystem.checkpoint[i] == this.gameObject)
-            //     {
-            //         checkpointIndex = i;
-            //         // print("Checkpoint Index: " + checkpointIndex);
-            //         break;
-            //     }
-            // }
+            for (int i = 0; i < spawnSystem.checkpoint.Length; i++)
+            {
+                if (spawnSystem.checkpoint[i] == this.gameObject)
+                {
+                    checkpointIndex = i;
+                    // print("Checkpoint Index: " + checkpointIndex);
+                    break;
+                }
+            }
         }
     }
 
@@ -113,10 +96,5 @@ public class Checkpoint : MonoBehaviour
                 altarItemRenderer.sprite = activatedSprite;
                 break;
         }
-    }
-
-    public void SetIndex(int i)
-    {
-        checkpointIndex = i;
     }
 }
