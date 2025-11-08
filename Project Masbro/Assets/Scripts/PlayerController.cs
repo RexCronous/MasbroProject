@@ -135,23 +135,18 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
-        // Movement SFX (running)
+        // footstep sfx
         bool isMovingNow = isGrounded && Mathf.Abs(rb.linearVelocity.x) > 0.1f;
         if (isMovingNow && Time.time >= nextFootstepTime)
         {
-            // if (isRunning) 
-            // { 
-            // // if (audioManager != null && audioManager.run != null) 
-            // // { 
-            // // // audioManager.PlaySfx(audioManager.run); 
-            // // // nextFootstepTime = Time.time + 0.8f; // 500ms delay 
-            // // } 
-            // }
             if (audioManager != null && audioManager.walking != null && audioManager.walking.Length > 0)
             {
-                AudioClip randomWalkClip = audioManager.walking[UnityEngine.Random.Range(0, audioManager.walking.Length)];
-                audioManager.PlaySfx(randomWalkClip);
-                nextFootstepTime = Time.time + 0.80f;
+                AudioClip step = audioManager.walking[UnityEngine.Random.Range(0, audioManager.walking.Length)];
+
+                audioManager.SetFootstepPitchWalk();
+                nextFootstepTime = Time.time + 0.50f;
+                audioManager.PlayFootstep(step);
+
             }
         }
 
