@@ -533,7 +533,7 @@ GameObject:
   - component: {fileID: 896963545}
   - component: {fileID: 896963544}
   m_Layer: 0
-  m_Name: Tilemap
+  m_Name: Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
