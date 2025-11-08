@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (currentSceneIndex == SceneManager.sceneCountInBuildSettings - 2) // Tutorial level
+        if (currentSceneIndex == SceneManager.sceneCountInBuildSettings - 3) // Tutorial level
         {
             atTutorial = true;
         }
@@ -141,14 +141,15 @@ public class GameManager : MonoBehaviour
         if (atTutorial) // Tutorial level completed
         {
             print("Tutorial Completed");
-            PlayerPrefs.SetInt("LevelUnlocked", 1);
+            PlayerPrefs.SetInt("Tutorial_Done", 1);
         }
-        else if (currentSceneIndex >= levelUnlocked) // Unlock next level
-        {
-            PlayerPrefs.SetInt("LevelUnlocked", currentSceneIndex + 1);
-        }
+        // else if (currentSceneIndex >= levelUnlocked) // Unlock next level
+        // {
+        //     PlayerPrefs.SetInt("LevelUnlocked", currentSceneIndex + 1);
+        // }
 
         // Simpan waktu tercepat baru bila lebih baik
+        fastestTime = PlayerPrefs.GetFloat(key, float.MaxValue);
         if (elapsedTime < fastestTime)
         {
             fastestTime = elapsedTime;

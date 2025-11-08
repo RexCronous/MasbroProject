@@ -6,7 +6,7 @@ public class StartMenuController : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private GameObject SettingsPanel;
 
-    private int levelUnlocked;
+    private int tutorialDone;
 
     private void Start()
     {
@@ -19,22 +19,12 @@ public class StartMenuController : MonoBehaviour
             Debug.LogWarning("Settings Panel is not assigned in StartMenuController!");
         }
     }
-    
+
     public void OnStartClick()
     {
         print("start");
         Time.timeScale = 1f;
-
-        levelUnlocked = PlayerPrefs.GetInt("LevelUnlocked", 0);
-
-        if (levelUnlocked == 0)
-        {
-            SceneManager.LoadScene("TutorialLevel");
-        }
-        else
-        {
-            SceneManager.LoadScene("SelectLevel");
-        }
+        SceneManager.LoadScene("SelectLevel");
     }
 
     public void OnExitClick()

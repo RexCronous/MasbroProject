@@ -115,17 +115,22 @@ public class LevelButton : MonoBehaviour
 
     public void OnLevelButtonClick()
     {
-        if (button.interactable)
-        {
-            // Set current level di GameManager
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.currentSceneIndex = levelID;
-            }
+        if (!button.interactable) return;
 
-            // Load level scene dengan path yang benar
+        int tutorialDone = PlayerPrefs.GetInt("Tutorial_Done", 0);
+
+        if (tutorialDone == 0)
+        {
+            // Buka panel tutorial dari scene controller
+            var controller = FindFirstObjectByType<SelectLevelController>();
+            if (controller != null)
+            {
+                controller.ShowTutorialPanel();
+            }
+        }
+        else
+        {
             SceneManager.LoadScene($"Scenes/Level {levelID}");
-            Debug.Log($"Loading scene: Scenes/Level {levelID}");
         }
     }
 
