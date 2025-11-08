@@ -188,12 +188,11 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 72
-  movSpeed: 15
-  runJumpForce: 9
+  jumpForce: 8
   maxJump: 1
   acceleration: 10
   deceleration: 6
-  maxVelocityX: 12
+  maxVelocityX: 11
   maxVelocityY: 20
   animator: {fileID: 3898950732275401989}
   SmokeFX: {fileID: 1905659679170778393}
