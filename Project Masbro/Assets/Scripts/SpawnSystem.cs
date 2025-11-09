@@ -6,7 +6,6 @@ public class SpawnSystem : MonoBehaviour
     public GameObject starting;
     public GameObject[] checkpoint;
     public int index = 0;
-    public int previousIndex = -1;
 
     public void SpawnAtStart()
     {

@@ -192,7 +192,7 @@ MonoBehaviour:
   maxJump: 1
   acceleration: 10
   deceleration: 6
-  maxVelocityX: 12
+  maxVelocityX: 10
   maxVelocityY: 20
   animator: {fileID: 3898950732275401989}
   SmokeFX: {fileID: 1905659679170778393}

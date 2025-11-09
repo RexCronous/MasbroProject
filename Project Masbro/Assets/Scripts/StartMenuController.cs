@@ -13,6 +13,7 @@ public class StartMenuController : MonoBehaviour
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        FindObjectOfType<VolumeSettings>()?.LoadVolume();
         if (audioManager == null)
         {
             Debug.LogError("AudioManager tidak ditemukan di scene!");

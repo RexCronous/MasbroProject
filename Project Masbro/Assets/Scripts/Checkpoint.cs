@@ -6,6 +6,7 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] private Sprite claimedSprite; // New sprite when checkpoint is activated
     [SerializeField] private Sprite activatedSprite; // New sprite when checkpoint is activated
     [SerializeField] private int checkpointIndex; // Index of this checkpoint
+    [SerializeField] private bool hasActivated = false;
     public enum ColliderState
     {
         Unclaimed,
@@ -39,7 +40,8 @@ public class Checkpoint : MonoBehaviour
                 if (spawnSystem.checkpoint[i] == this.gameObject)
                 {
                     spawnSystem.checkpoint[i].GetComponent<Checkpoint>().colliderState = ColliderState.Active;
-                    GameManager.Instance.SaveCheckpoint(checkpointIndex);
+                    GameManager.Instance.SaveCheckpoint(checkpointIndex, hasActivated);
+                    hasActivated = true;
                 }
             }
         }

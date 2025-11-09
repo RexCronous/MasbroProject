@@ -1,104 +1,118 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
-    [Header("========== Audio Mixer ==========")]
-    [SerializeField] private AudioMixer mixer;
+    [Header("==========Audio Source==========")]
+    [SerializeField] AudioSource musicSource; // untuk soundtrack
+    [SerializeField] AudioSource sfxSource; // untuk semua sfx normal
+    [SerializeField] AudioSource footstepSource; // untuk footstep (punya pitch sendiri)
 
-    [Header("========== Audio Source ==========")]
-    [SerializeField] AudioSource musicSource;
-    [SerializeField] AudioSource sfxSource;
-    [SerializeField] AudioSource footstepSource;
-
-    [Header("========== Audio Clip ==========")]
+    [Header("==========Audio Clip==========")]
     public AudioClip musicIdle;
 
-    public AudioClip gameOver;
+    [Header("==========Audio Clip==========")]
+    public AudioClip gameOver; //done
     public AudioClip finish;
-    public AudioClip selectItemGameOverMenu;
-    public AudioClip interactItemGameOverMenu;
-    public AudioClip takeDamage;
-    public AudioClip jump;
-    public AudioClip boxTouch;
-    public AudioClip[] walking;
-    public AudioClip checkPoint;
-    public AudioClip openPause;
-    public AudioClip closedPause;
-    public AudioClip finished;
+    public AudioClip selectItemGameOverMenu; // done
+    public AudioClip interactItemGameOverMenu; // done
+    public AudioClip takeDamage; // done
+    public AudioClip jump; // done
+    public AudioClip boxTouch; // done
+    public AudioClip[] walking; // done
+    public AudioClip checkPoint; // done
+    public AudioClip openPause; // done
+    public AudioClip closedPause; // done
+    public AudioClip finished; // done
 
-    [Header("========== Pitch Setting ==========")]
+    [Header("==========Pitch Setting==========")]
     [Range(0.1f, 3f)]
     public float walkPitch = 1.0f;
 
-    [Header("========== Fade Settings ==========")]
-    private float fadeDuration = 0.5f;
+    [Header("==========Fade Settings==========")]
+    public float fadeDuration = 0f;
 
+
+    // music is ready
+    // start music (when music is ready)
     private void Start()
     {
-        // 1. Baca volume dari PlayerPrefs
-        float musicVol = PlayerPrefs.GetFloat("musicVolume", 1f);
-        float sfxVol = PlayerPrefs.GetFloat("SFXVolume", 1f);
-
-        ApplyMixerVolume(musicVol, sfxVol);
-
-        // 2. Setup musik idle
+        // mengatur klip dan pastikan looping dimatikan (loop secara manual)
         musicSource.clip = musicIdle;
         musicSource.loop = false;
-        musicSource.volume = 1f;
 
-        // Volume audioSource = 0 untuk fade in (Mixer tetap pakai nilai prefs)
-        musicSource.volume = 0f;
+        // mulai fade in
         StartCoroutine(FadeIn(musicSource, fadeDuration));
     }
 
-    private void ApplyMixerVolume(float music, float sfx)
-    {
-        mixer.SetFloat("music", Mathf.Log10(music) * 20);
-        mixer.SetFloat("SFX", Mathf.Log10(sfx) * 20);
-    }
 
+    // dipanggil ketika music selesai
     private void Update()
     {
+        // cek jika musik telah berhenti
         if (!musicSource.isPlaying && musicSource.clip != null)
         {
+            // muali proses fade out
             StartCoroutine(FadeOutAndIn(musicSource, fadeDuration));
         }
     }
 
-    IEnumerator FadeIn(AudioSource source, float duration)
+    IEnumerator FadeIn(AudioSource audioSource, float duration)
     {
-        float t = 0f;
-        source.Play();
+        // Atur volume awal ke 0 dan Mulai Play()
+        audioSource.volume = 0f;
+        audioSource.Play();
 
-        while (t < duration)
+        float startVolume = 0f;
+        float targetVolume = 1f;
+        float currentTime = 0;
+
+        while (currentTime < duration)
         {
-            t += Time.deltaTime;
-            source.volume = Mathf.Lerp(0f, 1f, t / duration);
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, currentTime / duration);
             yield return null;
         }
 
-        source.volume = 1f;
+        audioSource.volume = targetVolume;
     }
 
-    IEnumerator FadeOutAndIn(AudioSource source, float duration)
+    IEnumerator FadeOutAndIn(AudioSource audioSource, float duration)
     {
-        float start = source.volume;
-        float t = 0f;
+        float startVolume = audioSource.volume;
+        float targetVolume = 0f;
+        float currentTime = 0;
 
-        while (t < duration)
+        while (currentTime < duration)
         {
-            t += Time.deltaTime;
-            source.volume = Mathf.Lerp(start, 0f, t / duration);
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, currentTime / duration);
             yield return null;
         }
 
-        source.volume = 0f;
-        source.time = 0f;
-        source.Play();
+        audioSource.volume = targetVolume;
 
-        yield return StartCoroutine(FadeIn(source, duration));
+        audioSource.time = 0f;
+        audioSource.Play();
+
+        yield return StartCoroutine(FadeIn(audioSource, duration));
+    }
+
+    private IEnumerator FadeOut(AudioSource audioSource, float duration)
+    {
+        float startVolume = audioSource.volume;
+        float targetVolume = 0f;
+        float currentTime = 0;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, currentTime / duration);
+            yield return null;
+        }
+
+        audioSource.volume = 0f;
     }
 
     public IEnumerator FadeOutMusic()
@@ -106,29 +120,14 @@ public class AudioManager : MonoBehaviour
         yield return StartCoroutine(FadeOut(musicSource, fadeDuration));
     }
 
-    private IEnumerator FadeOut(AudioSource source, float duration)
-    {
-        float start = source.volume;
-        float t = 0f;
-
-        while (t < duration)
-        {
-            t += Time.deltaTime;
-            source.volume = Mathf.Lerp(start, 0f, t / duration);
-            yield return null;
-        }
-
-        source.volume = 0f;
-    }
-
     public void PlaySfx(AudioClip clip)
     {
         sfxSource.PlayOneShot(clip);
+        // print("Play SFX: " + clip.name);
     }
 
     public void PlayFootstep(AudioClip clip)
     {
-        footstepSource.pitch = walkPitch;
         footstepSource.PlayOneShot(clip);
     }
 
@@ -136,5 +135,4 @@ public class AudioManager : MonoBehaviour
     {
         footstepSource.pitch = walkPitch;
     }
-
 }
