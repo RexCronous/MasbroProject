@@ -34,11 +34,14 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem SmokeFX;
 
     private Rigidbody2D rb;
-    private int jumpCount = 0;
+    private CapsuleCollider2D capsuleCollider;
+    [SerializeField] private int jumpCount = 0;
     // private bool runBeforeJump = false;
-    private bool isGrounded = false;
+    [SerializeField] private bool isGrounded = false;
+        private bool wasGrounded = false;
     AudioManager audioManager;
     private float nextFootstepTime = 0f;
+    private bool lastFacingRight;
 
     void Start()
     {
@@ -48,6 +51,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
     }
 
     void Update()
@@ -57,9 +61,20 @@ public class PlayerController : MonoBehaviour
         bool jumpPressed = Input.GetButtonDown("Jump");
         bool inputLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
         bool inputRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
+        
+        // Ground Checking
+        wasGrounded = isGrounded;
+        isGrounded = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer);
+        if (!isGrounded && jumpCount > 0) print("not grounded");
 
         // bool isRunning = Input.GetAxis("Run") > 0;
         // bool isCrouching = Input.GetKey(KeyCode.C);
+
+        // Double Jump Logic
+        if (isGrounded && !wasGrounded)
+        {
+            jumpCount = 0;
+        }
 
         // Update Velocity
         Vector2 velocity = rb.linearVelocity;
@@ -78,23 +93,27 @@ public class PlayerController : MonoBehaviour
                 velocity.x = Mathf.Lerp(velocity.x, 0.0f, deceleration * Time.deltaTime); // deceleration
         }
 
-        // Double Jump Logic
-        if (isGrounded)
+        if (!isGrounded && wasGrounded && jumpCount == 0)
         {
-            jumpCount = 0;
+            jumpCount = 1;
         }
 
         if (jumpPressed) animator.SetBool("isJumping", true);
 
-        if (jumpPressed && jumpCount < maxJump)
+        if (jumpPressed && (isGrounded || jumpCount <= maxJump))
         {
             SmokeFX.Play();
             if (audioManager != null && audioManager.jump != null)
-            {
                 audioManager.PlaySfx(audioManager.jump);
-            }
+
+            if (!isGrounded)
+                animator.SetBool("isDoubleJumping", true);
+            else
+                animator.SetBool("isDoubleJumping", false);
+
             velocity.y = jumpForce;
             jumpCount++;
+            animator.SetBool("isJumping", true);
         }
 
         // Batas kecepatan
@@ -112,20 +131,18 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = velocity;
 
-        // Ground Checking
-        isGrounded = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer);
-
         // Head Checking
         if (Physics2D.OverlapBox(headCheckPos.position, headCheckSize, 0, groundLayer) && !isGrounded)
         {
-            GetComponent<CapsuleCollider2D>().enabled = false;
+            capsuleCollider.enabled = false;
         }
         else
         {
-            GetComponent<CapsuleCollider2D>().enabled = true;
+            capsuleCollider.enabled = true;
         }
 
         // Flip player direction
+        bool facingRight = transform.localScale.x > 0;
         if (horizontalInput > 0.01f)
         {
             transform.localScale = new Vector3(1, 1, 1);
@@ -172,10 +189,12 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocityX));
 
         // Efek smoke saat bergerak
-        if (!SmokeFX.isPlaying && Mathf.Abs(rb.linearVelocityX) > 0)
+        if (lastFacingRight != facingRight && Mathf.Abs(rb.linearVelocityX) > 0)
         {
             SmokeFX.Play();
         }
+
+        lastFacingRight = facingRight;
     }
 
     private void OnCollisionExit2D(Collision2D other)

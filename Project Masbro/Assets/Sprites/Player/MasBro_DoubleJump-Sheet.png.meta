@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 39253337bce6e09419b78851a616c0f4
+guid: 8eace2984af99714ab854557d27e5cdc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6354807491737505565
-    second: MasBro_Idle 1_0
+      213: -763601343893434172
+    second: MasBro_DoubleJump-Sheet_0
   - first:
-      213: 7592494878537057931
-    second: MasBro_Idle 1_1
+      213: -9092706812993783248
+    second: MasBro_DoubleJump-Sheet_1
   - first:
-      213: -1151972706943535661
-    second: MasBro_Idle 1_2
+      213: -1750697587890636761
+    second: MasBro_DoubleJump-Sheet_2
   - first:
-      213: 278673087659439896
-    second: MasBro_Idle 1_3
+      213: -5899066167855312554
+    second: MasBro_DoubleJump-Sheet_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -135,7 +135,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MasBro_Idle 1_0
+      name: MasBro_DoubleJump-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -150,14 +150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d1f41099ebfc03850800000000000000
-      internalID: 6354807491737505565
+      spriteID: 4c0983b9f942765f0800000000000000
+      internalID: -763601343893434172
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MasBro_Idle 1_1
+      name: MasBro_DoubleJump-Sheet_1
       rect:
         serializedVersion: 2
         x: 0
@@ -172,14 +172,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b868c228dd5fd5960800000000000000
-      internalID: 7592494878537057931
+      spriteID: 03a3bbc245730d180800000000000000
+      internalID: -9092706812993783248
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MasBro_Idle 1_2
+      name: MasBro_DoubleJump-Sheet_2
       rect:
         serializedVersion: 2
         x: 0
@@ -194,14 +194,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3d57fab2dee5300f0800000000000000
-      internalID: -1151972706943535661
+      spriteID: 72835a4c1d544b7e0800000000000000
+      internalID: -1750697587890636761
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MasBro_Idle 1_3
+      name: MasBro_DoubleJump-Sheet_3
       rect:
         serializedVersion: 2
         x: 0
@@ -216,8 +216,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 817f66e52bb0ed300800000000000000
-      internalID: 278673087659439896
+      spriteID: 651957e239e422ea0800000000000000
+      internalID: -5899066167855312554
       vertices: []
       indices: 
       edges: []
@@ -226,7 +226,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7ec04df9268d57945aac5c994f65be68
+    spriteID: ff0ee51b8cddaff4287c905847b44b1a
     internalID: 0
     vertices: []
     indices: 
@@ -236,10 +236,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MasBro_Idle 1_0: 6354807491737505565
-      MasBro_Idle 1_1: 7592494878537057931
-      MasBro_Idle 1_2: -1151972706943535661
-      MasBro_Idle 1_3: 278673087659439896
+      MasBro_DoubleJump-Sheet_0: -763601343893434172
+      MasBro_DoubleJump-Sheet_1: -9092706812993783248
+      MasBro_DoubleJump-Sheet_2: -1750697587890636761
+      MasBro_DoubleJump-Sheet_3: -5899066167855312554
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
