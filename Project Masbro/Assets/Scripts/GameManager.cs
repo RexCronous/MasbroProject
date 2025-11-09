@@ -100,12 +100,11 @@ public class GameManager : MonoBehaviour
         spawnSystem.SpawnAtStart();
     }
 
-    public void SaveCheckpoint(int Index)
+    public void SaveCheckpoint(int Index, bool hasActivated)
     {
         spawnSystem = FindFirstObjectByType<SpawnSystem>();
-        if (Index > spawnSystem.previousIndex)
+        if (!hasActivated)
         {
-            spawnSystem.previousIndex = Index;
             checkpointsReached++;
         }
         spawnSystem.index = Index;
