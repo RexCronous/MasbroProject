@@ -10,14 +10,10 @@ public class SelectLevelController : MonoBehaviour
     [SerializeField] private GameObject confirmPanel;
     [SerializeField] private GameObject tutorialPanel;
     [Header("Buttons")]
-<<<<<<< HEAD
-    [SerializeField] private GameObject[] levelButtons;
-=======
     [SerializeField] private Button[] levelButtons;
     private AudioManager audioManager;
 
     private int levelUnlocked;
->>>>>>> 83cda8ff9085491c2a5c609d6ce05efd46bc11ac
 
     [System.Obsolete]
 
