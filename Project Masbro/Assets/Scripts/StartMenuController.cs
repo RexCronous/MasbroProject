@@ -4,7 +4,6 @@ using System.Collections;
 
 public class StartMenuController : MonoBehaviour
 {
-
     [Header("Panels")]
     [SerializeField] private GameObject SettingsPanel;
 
@@ -29,6 +28,7 @@ public class StartMenuController : MonoBehaviour
             Debug.LogWarning("Settings Panel is not assigned in StartMenuController!");
         }
     }
+
     public void OnStartClick()
     {
         print("start");
