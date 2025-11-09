@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    // Tambahkan event publik statis
+    public static event Action OnFinishEvent;
+
     [Header("Game Over")]
     [SerializeField] private GameObject gameOverScreen;
     [Header("Pause")]
@@ -14,9 +18,29 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
     [Header("Progress")]
     [SerializeField] private TextMeshProUGUI progressText;
+    [SerializeField] private GameObject SettingsPanel;
 
     private AudioManager audioManager;
 
+    [System.Obsolete]
+    private void Start()
+    {
+        audioManager = FindObjectOfType<AudioManager>();
+        FindObjectOfType<VolumeSettings>()?.LoadVolume();
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager tidak ditemukan di scene!");
+        }
+
+        if (SettingsPanel != null)
+        {
+            SettingsPanel.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("Settings Panel is not assigned in StartMenuController!");
+        }
+    }
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
@@ -46,11 +70,20 @@ public class UIManager : MonoBehaviour
 
     public void Finish()
     {
-        if (finishScreen != null)
+        if (finishScreen != null && audioManager != null && audioManager.finished != null)
         {
+            Time.timeScale = 0;
+            audioManager.PlaySfx(audioManager.finished);
             finishScreen.SetActive(true);
             finishScreen.GetComponent<LevelTimer>()?.FinishLevel();
+
+            if (audioManager != null && audioManager.finish != null)
+            {
+                audioManager.PlaySfx(audioManager.finish);
+            }
         }
+
+        OnFinishEvent?.Invoke();
     }
 
     public void NextLevel()
@@ -135,13 +168,25 @@ public class UIManager : MonoBehaviour
             Time.timeScale = 1;
     }
 
-    public void MusicVolume()
+    public void OnSettingClick()
     {
-
+        print("setting");
+        // if (audioManager != null && audioManager.interactItemGameOverMenu != null)
+        // {
+        //     audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
+        // }
+        // Time.timeScale = 1f;
+        SettingsPanel.SetActive(true);
     }
-    public void SoundVolume()
-    {
 
+    public void OnBackClick()
+    {
+        Debug.Log("back");
+        if (audioManager != null && audioManager.interactItemGameOverMenu != null)
+        {
+            audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
+        }
+        SettingsPanel.SetActive(false);
     }
     #endregion
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class SelectLevelController : MonoBehaviour
 {
@@ -9,11 +10,28 @@ public class SelectLevelController : MonoBehaviour
     [SerializeField] private GameObject confirmPanel;
     [Header("Buttons")]
     [SerializeField] private Button[] levelButtons;
+    private AudioManager audioManager;
 
     private int levelUnlocked;
 
+    [System.Obsolete]
+
     private void Start()
     {
+
+        // Ensure default unlock(s) are initialized in one place (menu)
+        if (!PlayerPrefs.HasKey("Level1_Unlocked"))
+        {
+            PlayerPrefs.SetInt("Level1_Unlocked", 1);
+            PlayerPrefs.Save();
+        }
+
+        audioManager = FindObjectOfType<AudioManager>();
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager tidak ditemukan di scene!");
+        }
+
         if (levelButtons != null && levelButtons.Length > 0)
         {
             // Check setiap level button
@@ -36,11 +54,6 @@ public class SelectLevelController : MonoBehaviour
         }
 
         confirmPanel.SetActive(false);
-    }
-
-    public void LoadLevel(int levelIndex)
-    {
-        SceneManager.LoadScene(levelIndex);
     }
 
     public void OnRestartClick()
@@ -93,6 +106,23 @@ public class SelectLevelController : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        if (audioManager != null && audioManager.interactItemGameOverMenu != null)
+        {
+            audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
+        }
+        StartCoroutine(FadeOutAndLoadScene("MainMenu"));
+    }
+
+    private IEnumerator FadeOutAndLoadScene(string sceneName)
+    {
+        if (audioManager != null)
+        {
+            // Mulai Fade Out dan TUNGGU sampai Coroutine FadeOutMusic selesai
+            yield return StartCoroutine(audioManager.FadeOutMusic());
+        }
+
+        // Setelah musik benar-benar sunyi (atau jika AudioManager tidak ada),
+        // barulah scene dimuat.
+        SceneManager.LoadScene(sceneName);
     }
 }
