@@ -7,6 +7,8 @@ public class StartMenuController : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private GameObject SettingsPanel;
 
+    private bool isTranstioning = false;
+
     private AudioManager audioManager;
 
     [System.Obsolete]
@@ -31,6 +33,12 @@ public class StartMenuController : MonoBehaviour
 
     public void OnStartClick()
     {
+        if (isTranstioning)
+        {
+            Debug.LogWarning("Transisi sudah berjalan");
+            return;
+        }
+        isTranstioning = true;
         print("start");
         if (audioManager != null && audioManager.interactItemGameOverMenu != null)
         {
@@ -56,11 +64,18 @@ public class StartMenuController : MonoBehaviour
 
     public void OnExitClick()
     {
+        if (isTranstioning)
+        {
+            Debug.LogWarning("Transisi sudah berjalan");
+            return;
+        }
+        isTranstioning = true;
+        print("exit");
         Application.Quit();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
-        print("exit");
+
     }
 
     public void OnSettingClick()

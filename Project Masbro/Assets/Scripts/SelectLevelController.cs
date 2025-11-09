@@ -14,6 +14,7 @@ public class SelectLevelController : MonoBehaviour
     private AudioManager audioManager;
 
     private int levelUnlocked;
+    private bool isTranstioning;
 
     [System.Obsolete]
 
@@ -122,6 +123,13 @@ public class SelectLevelController : MonoBehaviour
 
     public void BackToMainMenu()
     {
+        if (isTranstioning)
+        {
+            Debug.LogWarning("Transisi sudah berjalan");
+            return;
+        }
+        isTranstioning = true;
+
         if (audioManager != null && audioManager.interactItemGameOverMenu != null)
         {
             audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
