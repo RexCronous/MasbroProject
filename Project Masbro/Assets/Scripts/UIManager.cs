@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        FindObjectOfType<VolumeSettings>()?.LoadVolume();
+        // FindObjectOfType<VolumeSettings>()?.LoadVolume();
         if (audioManager == null)
         {
             Debug.LogError("AudioManager tidak ditemukan di scene!");
@@ -176,6 +176,7 @@ public class UIManager : MonoBehaviour
         //     audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
         // }
         // Time.timeScale = 1f;
+        pauseScreen.SetActive(false);
         SettingsPanel.SetActive(true);
     }
 
@@ -187,6 +188,7 @@ public class UIManager : MonoBehaviour
             audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
         }
         SettingsPanel.SetActive(false);
+        pauseScreen.SetActive(true);
     }
     #endregion
 }

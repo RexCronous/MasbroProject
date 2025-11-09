@@ -1097,6 +1097,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2009353504727915147, guid: b5e831ccf7b23724a851bded931e2d57, type: 3}
+      propertyPath: mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: e245edc216d224f8f89c883d43272c4b, type: 2}
+    - target: {fileID: 2009353504727915147, guid: b5e831ccf7b23724a851bded931e2d57, type: 3}
       propertyPath: finished
       value: 
       objectReference: {fileID: 8300000, guid: 35ec0c9faa81a4643b9893320dbafb19, type: 3}
@@ -4258,7 +4262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3ae2bc153b44775bf9893ffdc127c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myMixer: {fileID: 24100000, guid: e245edc216d224f8f89c883d43272c4b, type: 2}
+  mixer: {fileID: 24100000, guid: e245edc216d224f8f89c883d43272c4b, type: 2}
   musicSlider: {fileID: 142101081}
   sfxSlider: {fileID: 685108632}
 --- !u!114 &1718879500
