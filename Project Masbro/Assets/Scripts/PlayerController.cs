@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float deceleration = 8.0f;
     [SerializeField] private float maxVelocityX = 11.0f;
     [SerializeField] private float maxVelocityY = 15f;
+    [SerializeField] private bool canControl = true;
 
     [Header("Animation & Feedback")]
     [SerializeField] private Animator animator;
@@ -46,6 +47,12 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        UIManager.OnFinishEvent += DisableControl;
+    }
+
+    private void OnDestroy()
+    {
+        UIManager.OnFinishEvent -= DisableControl; // Unsubscribe agar tidak error saat scene ganti
     }
 
     private void Awake()
@@ -56,6 +63,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!canControl)
+            return;
+
         // Ambil Input
         float horizontalInput = Input.GetAxis("Horizontal");
         bool jumpPressed = Input.GetButtonDown("Jump");
@@ -195,6 +205,17 @@ public class PlayerController : MonoBehaviour
         }
 
         lastFacingRight = facingRight;
+    }
+
+    private void DisableControl()
+    {
+        canControl = false;
+        rb.linearVelocity = Vector2.zero; // hentikan gerakan langsung
+
+        animator.SetFloat("Speed", 0f);
+        animator.SetBool("isJumping", false);
+        animator.SetBool("isFalling", false);
+        animator.SetBool("isDoubleJumping", false);
     }
 
     private void OnCollisionExit2D(Collision2D other)

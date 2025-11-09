@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    // Tambahkan event publik statis
+    public static event Action OnFinishEvent;
+
     [Header("Game Over")]
     [SerializeField] private GameObject gameOverScreen;
     [Header("Pause")]
@@ -50,7 +54,14 @@ public class UIManager : MonoBehaviour
         {
             finishScreen.SetActive(true);
             finishScreen.GetComponent<LevelTimer>()?.FinishLevel();
+
+            if (audioManager != null && audioManager.finish != null)
+            {
+                audioManager.PlaySfx(audioManager.finish);
+            }
         }
+
+        OnFinishEvent?.Invoke();
     }
 
     public void NextLevel()

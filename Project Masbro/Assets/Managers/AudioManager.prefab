@@ -309,6 +309,7 @@ MonoBehaviour:
   sfxSource: {fileID: 3024404979169917219}
   footstepSource: {fileID: 2901948562590792747}
   gameOver: {fileID: 8300000, guid: 4400828abc604401c8c8103493b8119a, type: 3}
+  finish: {fileID: 8300000, guid: 559891d4e833c4746b4e190f400a5ad7, type: 3}
   selectItemGameOverMenu: {fileID: 8300000, guid: 1a2cf9e0d9542423ea666d17bffb3e9d, type: 3}
   interactItemGameOverMenu: {fileID: 8300000, guid: 643be322da3bc4328851fdb0cc9836c7, type: 3}
   takeDamage: {fileID: 8300000, guid: e301611345270461a9a8994816d4d623, type: 3}

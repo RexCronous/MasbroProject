@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("==========Audio Clip==========")]
     public AudioClip gameOver; //done
+    public AudioClip finish;
     public AudioClip selectItemGameOverMenu; // done
     public AudioClip interactItemGameOverMenu; // done
     public AudioClip takeDamage; // done
