@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
         // Ground Checking
         wasGrounded = isGrounded;
         isGrounded = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer);
-        if (!isGrounded && jumpCount > 0) print("not grounded");
+        // if (!isGrounded && jumpCount > 0) print("not grounded");
 
         // bool isRunning = Input.GetAxis("Run") > 0;
         // bool isCrouching = Input.GetKey(KeyCode.C);
