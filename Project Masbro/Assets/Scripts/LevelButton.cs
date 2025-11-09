@@ -117,29 +117,22 @@ public class LevelButton : MonoBehaviour
 
     public void OnLevelButtonClick()
     {
-        if (button.interactable)
-        {
-            // Set current level di GameManager
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.currentSceneIndex = levelID;
-            }
+        if (!button.interactable) return;
 
-            // Load level scene dengan path yang benar
-            if (audioManager != null && audioManager.interactItemGameOverMenu != null)
-            {
-                audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
-            }
-            StartCoroutine(FadeOutAndLoadScene($"Scenes/Level {levelID}"));
-            Debug.Log($"Loading scene: Scenes/Level {levelID}");
+        // Load level scene dengan path yang benar
+        if (audioManager != null && audioManager.interactItemGameOverMenu != null)
+        {
+            audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
         }
+        StartCoroutine(FadeOutAndLoadScene(levelID));
+        Debug.Log($"Loading scene: Scenes/Level {levelID}");
     }
 
-    private IEnumerator FadeOutAndLoadScene(string sceneName)
+    private IEnumerator FadeOutAndLoadScene(int sceneIndex)
     {
         // With persistent AudioManager we no longer fade out music here;
         // just load the scene so music can continue playing.
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneIndex);
         yield break;
     }
 

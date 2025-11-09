@@ -91,7 +91,7 @@ public class UIManager : MonoBehaviour
         int currentSceneIndex = GameManager.Instance.currentSceneIndex;
 
         currentSceneIndex++;
-        if (currentSceneIndex >= SceneManager.sceneCountInBuildSettings - 1)
+        if (currentSceneIndex >= SceneManager.sceneCountInBuildSettings - 2)
         {
             currentSceneIndex = 0; // Kembali ke menu utama atau scene pertama
         }

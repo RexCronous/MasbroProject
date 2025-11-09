@@ -6,8 +6,9 @@ using System.Collections;
 public class SelectLevelController : MonoBehaviour
 {
     [Header("Panels")]
-    [SerializeField] private GameObject MainPanel;
+    [SerializeField] private GameObject mainPanel;
     [SerializeField] private GameObject confirmPanel;
+    [SerializeField] private GameObject tutorialPanel;
     [Header("Buttons")]
     [SerializeField] private Button[] levelButtons;
     private AudioManager audioManager;
@@ -40,11 +41,14 @@ public class SelectLevelController : MonoBehaviour
                 int levelNum = i + 1;
                 if (levelButtons[i] != null)
                 {
-                    // Cek status unlock untuk setiap level
-                    bool isUnlocked = (levelNum == 1) || (PlayerPrefs.GetInt($"Level{levelNum}_Unlocked", 0) == 1);
-                    levelButtons[i].interactable = isUnlocked;
+                    Button btn = levelButtons[i].GetComponent<Button>();
+                    if (btn != null)
+                    {
+                        bool isUnlocked = (levelNum == 1) || (PlayerPrefs.GetInt($"Level{levelNum}_Unlocked", 0) == 1);
+                        btn.interactable = isUnlocked;
 
-                    Debug.Log($"Level {levelNum} - Unlock Status: {isUnlocked}");
+                        Debug.Log($"Level {levelNum} - Unlock Status: {isUnlocked}");
+                    }
                 }
             }
         }
@@ -54,6 +58,7 @@ public class SelectLevelController : MonoBehaviour
         }
 
         confirmPanel.SetActive(false);
+        tutorialPanel.SetActive(false);
     }
 
     public void OnRestartClick()
@@ -61,47 +66,58 @@ public class SelectLevelController : MonoBehaviour
         if (confirmPanel != null)
         {
             confirmPanel.SetActive(true);
-            MainPanel.SetActive(false);
+            mainPanel.SetActive(false);
         }
     }
 
-    public void OnConfirmYes()
+    public void OnConfirmYes(GameObject panel)
     {
-        // Reset semua progress
-        for (int i = 1; i <= levelButtons.Length; i++)
+        if (panel == confirmPanel)
         {
-            // Hapus status unlock level (kecuali level 1)
-            if (i > 1)
+            // Reset semua progress
+            for (int i = 1; i <= levelButtons.Length; i++)
             {
-                PlayerPrefs.DeleteKey($"Level{i}_Unlocked");
+                // Hapus status unlock level (kecuali level 1)
+                if (i > 1)
+                {
+                    PlayerPrefs.DeleteKey($"Level{i}_Unlocked");
+                }
+
+                // Hapus progress bintang
+                PlayerPrefs.DeleteKey($"Level{i}_Progress");
+
+                // Hapus waktu tercepat
+                PlayerPrefs.DeleteKey($"FastestTime_Level{i}");
             }
 
-            // Hapus progress bintang
-            PlayerPrefs.DeleteKey($"Level{i}_Progress");
+            // Set ulang level 1 ke terbuka
+            PlayerPrefs.SetInt("Level1_Unlocked", 1);
 
-            // Hapus waktu tercepat
-            PlayerPrefs.DeleteKey($"FastestTime_Level{i}");
+            // Set Tutorial
+            PlayerPrefs.SetInt("Tutorial_Done", 0);
+
+            // Pastikan perubahan tersimpan
+            PlayerPrefs.Save();
+
+            Debug.Log("Semua progress level telah direset");
+
+            // Reload scene
+            SceneManager.LoadScene("Scenes/SelectLevel");
         }
-
-        // Set ulang level 1 ke terbuka
-        PlayerPrefs.SetInt("Level1_Unlocked", 1);
-
-        // Pastikan perubahan tersimpan
-        PlayerPrefs.Save();
-
-        Debug.Log("Semua progress level telah direset");
-
-        // Reload scene
-        SceneManager.LoadScene("Scenes/SelectLevel");
+        else if (panel == tutorialPanel)
+        {
+            SceneManager.LoadScene("TutorialLevel");
+        }
     }
 
-    public void OnConfirmNo()
+    public void OnConfirmNo(GameObject panel)
     {
-        if (confirmPanel != null)
+        if (panel == tutorialPanel)
         {
-            confirmPanel.SetActive(false);
-            MainPanel.SetActive(true);
+            tutorialPanel.SetActive(false);
         }
+        confirmPanel.SetActive(false);
+        mainPanel.SetActive(true);
     }
 
     public void BackToMainMenu()
