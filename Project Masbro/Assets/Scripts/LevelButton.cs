@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class LevelButton : MonoBehaviour
@@ -10,7 +10,9 @@ public class LevelButton : MonoBehaviour
     [SerializeField] private Image starBar;    // Single image untuk 3 bintang
     [SerializeField] private Button button;
 
+
     private int levelID;
+    private AudioManager audioManager;
 
     private void Awake()
     {
@@ -25,6 +27,8 @@ public class LevelButton : MonoBehaviour
                 Debug.Log($"Level ID terdeteksi: {levelID} dari {levelName}");
             }
         }
+
+
 
         // Pastikan Level ID valid
         if (levelID <= 0)
@@ -43,23 +47,25 @@ public class LevelButton : MonoBehaviour
         if (starBar == null)
             starBar = transform.Find("StarCurrent")?.GetComponent<Image>();
 
-        // Inisialisasi level 1
-        if (levelID == 1)
-        {
-            Debug.Log("Membuka Level 1...");
-            PlayerPrefs.DeleteKey("Level1_Unlocked"); // Hapus key lama
-            PlayerPrefs.SetInt("Level1_Unlocked", 1); // Set ulang ke 1
-            PlayerPrefs.Save();
-        }
+        // Note: do NOT modify PlayerPrefs here. Initialization (unlock defaults) is handled in the
+        // SelectLevelController to avoid duplicated writes from multiple LevelButton instances.
     }
 
+    [System.Obsolete]
     private void Start()
     {
+
+        audioManager = FindObjectOfType<AudioManager>();
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager tidak ditemukan di scene!");
+        }
         // Set button click listener
         if (button != null)
             button.onClick.AddListener(OnLevelButtonClick);
 
         LoadState();
+
     }
 
     void LoadState()
@@ -80,13 +86,9 @@ public class LevelButton : MonoBehaviour
             Debug.Log($"Level {levelID} unlock status: {isUnlocked}");
         }
 
-        // Pastikan level 1 selalu terbuka
-        if (levelID == 1)
-        {
-            PlayerPrefs.SetInt(unlockKey, 1);
-            PlayerPrefs.Save();
-            isUnlocked = true;
-        }
+        // Do not write PlayerPrefs here. SelectLevelController is responsible for
+        // initializing the default unlock state (level 1). This prevents duplicated
+        // writes and race conditions when multiple LevelButton instances awake.
 
         // Ambil progress bintang
         float progress = PlayerPrefs.GetFloat(progressKey, 0f);
@@ -117,32 +119,44 @@ public class LevelButton : MonoBehaviour
     {
         if (!button.interactable) return;
 
-        int tutorialDone = PlayerPrefs.GetInt("Tutorial_Done", 0);
-
-        if (tutorialDone == 0)
-        {
-            // Buka panel tutorial dari scene controller
-            var controller = FindFirstObjectByType<SelectLevelController>();
-            if (controller != null)
+            // Load level scene dengan path yang benar
+            if (audioManager != null && audioManager.interactItemGameOverMenu != null)
             {
-                controller.ShowTutorialPanel();
+                audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
             }
-        }
-        else
-        {
-            SceneManager.LoadScene($"Scenes/Level {levelID}");
+            StartCoroutine(FadeOutAndLoadScene($"Scenes/Level {levelID}"));
+            Debug.Log($"Loading scene: Scenes/Level {levelID}");
         }
     }
 
-    // Dipanggil ketika level selesai untuk update progress
-    public void UpdateProgress(float progress)
+    private IEnumerator FadeOutAndLoadScene(string sceneName)
     {
-        if (starBar != null)
-        {
-            starBar.fillAmount = progress;
-            PlayerPrefs.SetFloat("Level" + levelID + "_Progress", progress);
-        }
+        // With persistent AudioManager we no longer fade out music here;
+        // just load the scene so music can continue playing.
+        SceneManager.LoadScene(sceneName);
+        yield break;
     }
+
+    // // Dipanggil ketika level selesai untuk update progress
+    // public void UpdateProgress(float progress)
+    // {
+    //     if (starBar == null) return;
+
+    //     string progressKey = $"Level{levelID}_Progress";
+    //     float prev = PlayerPrefs.GetFloat(progressKey, 0f);
+
+    //     // Simpan hanya jika progress baru lebih besar dari yang tersimpan
+    //     float toStore = Mathf.Max(prev, progress);
+    //     if (toStore > prev)
+    //     {
+    //         PlayerPrefs.SetFloat(progressKey, toStore);
+    //         PlayerPrefs.Save();
+    //         Debug.Log($"Level {levelID} progress updated: {prev} -> {toStore}");
+    //     }
+
+    //     // Pastikan UI menampilkan nilai maksimum
+    //     starBar.fillAmount = Mathf.Max(starBar.fillAmount, toStore);
+    // }
 
     // Dipanggil untuk membuka level berikutnya
     public void UnlockLevel()

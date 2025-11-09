@@ -1,15 +1,23 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class StartMenuController : MonoBehaviour
 {
     [Header("Panels")]
     [SerializeField] private GameObject SettingsPanel;
 
-    private int tutorialDone;
+    private AudioManager audioManager;
 
+    [System.Obsolete]
     private void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager tidak ditemukan di scene!");
+        }
+
         if (SettingsPanel != null)
         {
             SettingsPanel.SetActive(false);
@@ -23,8 +31,26 @@ public class StartMenuController : MonoBehaviour
     public void OnStartClick()
     {
         print("start");
+        if (audioManager != null && audioManager.interactItemGameOverMenu != null)
+        {
+            audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
+        }
         Time.timeScale = 1f;
-        SceneManager.LoadScene("SelectLevel");
+        // Panggil Coroutine untuk Fade Out dan Load Scene
+        StartCoroutine(FadeOutAndLoadScene("SelectLevel"));
+    }
+
+    private IEnumerator FadeOutAndLoadScene(string sceneName)
+    {
+        if (audioManager != null)
+        {
+            // Mulai Fade Out dan TUNGGU sampai Coroutine FadeOutMusic selesai
+            yield return StartCoroutine(audioManager.FadeOutMusic());
+        }
+
+        // Setelah musik benar-benar sunyi (atau jika AudioManager tidak ada),
+        // barulah scene dimuat.
+        SceneManager.LoadScene(sceneName);
     }
 
     public void OnExitClick()
@@ -39,12 +65,21 @@ public class StartMenuController : MonoBehaviour
     public void OnSettingClick()
     {
         print("setting");
+        if (audioManager != null && audioManager.interactItemGameOverMenu != null)
+        {
+            audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
+        }
         // Time.timeScale = 1f;
         SettingsPanel.SetActive(true);
     }
 
     public void OnBackClick()
     {
+        Debug.Log("back");
+        if (audioManager != null && audioManager.interactItemGameOverMenu != null)
+        {
+            audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
+        }
         SettingsPanel.SetActive(false);
     }
 }

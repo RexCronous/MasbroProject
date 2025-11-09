@@ -6,7 +6,7 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] private Sprite claimedSprite; // New sprite when checkpoint is activated
     [SerializeField] private Sprite activatedSprite; // New sprite when checkpoint is activated
     [SerializeField] private int checkpointIndex; // Index of this checkpoint
-    private enum ColliderState
+    public enum ColliderState
     {
         Unclaimed,
         Claimed,
@@ -16,7 +16,7 @@ public class Checkpoint : MonoBehaviour
     private AudioManager audioManager;
 
 
-    [SerializeField] private ColliderState colliderState = ColliderState.Unclaimed;
+    [SerializeField] public ColliderState colliderState = ColliderState.Unclaimed;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -31,7 +31,11 @@ public class Checkpoint : MonoBehaviour
             spawnSystem = FindFirstObjectByType<SpawnSystem>();
             for (int i = 0; i < spawnSystem.checkpoint.Length; i++)
             {
-                spawnSystem.checkpoint[i].GetComponent<Checkpoint>().colliderState = ColliderState.Claimed;
+                ColliderState isClaimed = spawnSystem.checkpoint[i].GetComponent<Checkpoint>().colliderState;
+                if (isClaimed == ColliderState.Active)
+                {
+                    spawnSystem.checkpoint[i].GetComponent<Checkpoint>().colliderState = ColliderState.Claimed;
+                }
                 if (spawnSystem.checkpoint[i] == this.gameObject)
                 {
                     spawnSystem.checkpoint[i].GetComponent<Checkpoint>().colliderState = ColliderState.Active;

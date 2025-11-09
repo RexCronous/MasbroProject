@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
     private int checkpointsReached = 0;
     private string key;
     private bool levelFinished = false;
-    [HideInInspector] public bool atTutorial = false;
 
     // Properties untuk StarBar
     public int CheckpointsReached => checkpointsReached;
@@ -85,15 +84,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (currentSceneIndex == SceneManager.sceneCountInBuildSettings - 3) // Tutorial level
-        {
-            atTutorial = true;
-        }
-        else
-        {
-            atTutorial = false;
-        }
-        
         elapsedTime = 0f;
         levelFinished = false;
 
@@ -126,29 +116,22 @@ public class GameManager : MonoBehaviour
     {
         levelFinished = true;
 
-        // Simpan progress checkpoint untuk star bar
-        float progress = (float)checkpointsReached / numberOfCheckpoints;
-        PlayerPrefs.SetFloat($"Level{currentSceneIndex}_Progress", progress);
+        // Simpan progress checkpoint untuk star bar — hanya jika lebih tinggi dari yang tersimpan
+        float progress = numberOfCheckpoints > 0 ? (float)checkpointsReached / numberOfCheckpoints : 0f;
+        string progressKey = $"Level{currentSceneIndex}_Progress";
+        float prevProgress = PlayerPrefs.GetFloat(progressKey, 0f);
+        if (progress > prevProgress)
+        {
+            PlayerPrefs.SetFloat(progressKey, progress);
+            Debug.Log($"Updated stored progress for Level {currentSceneIndex}: {prevProgress} -> {progress}");
+        }
 
-        // Unlock level berikutnya
+        // Unlock level berikutnya (set unlock flag)
         int nextLevel = currentSceneIndex + 1;
         PlayerPrefs.SetInt($"Level{nextLevel}_Unlocked", 1);
 
         // Simpan waktu tercepat
         key = "FastestTime_Level" + currentSceneIndex;
-        fastestTime = PlayerPrefs.GetFloat(key, elapsedTime);
-
-        if (atTutorial) // Tutorial level completed
-        {
-            print("Tutorial Completed");
-            PlayerPrefs.SetInt("Tutorial_Done", 1);
-        }
-        // else if (currentSceneIndex >= levelUnlocked) // Unlock next level
-        // {
-        //     PlayerPrefs.SetInt("LevelUnlocked", currentSceneIndex + 1);
-        // }
-
-        // Simpan waktu tercepat baru bila lebih baik
         fastestTime = PlayerPrefs.GetFloat(key, float.MaxValue);
         if (elapsedTime < fastestTime)
         {
@@ -159,7 +142,7 @@ public class GameManager : MonoBehaviour
         // Pastikan perubahan tersimpan
         PlayerPrefs.Save();
 
-        Debug.Log($"Level {currentSceneIndex} selesai - Progress: {progress}, Unlocking Level {nextLevel}");
+        Debug.Log($"Level {currentSceneIndex} selesai - Progress: {progress}, previous: {prevProgress}, Unlocking Level {nextLevel}");
 
         uiManager = uiManager ?? FindFirstObjectByType<UIManager>();
         uiManager?.Finish();
