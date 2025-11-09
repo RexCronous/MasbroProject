@@ -116,11 +116,17 @@ public class GameManager : MonoBehaviour
     {
         levelFinished = true;
 
-        // Simpan progress checkpoint untuk star bar
-        float progress = (float)checkpointsReached / numberOfCheckpoints;
-        PlayerPrefs.SetFloat($"Level{currentSceneIndex}_Progress", progress);
+        // Simpan progress checkpoint untuk star bar — hanya jika lebih tinggi dari yang tersimpan
+        float progress = numberOfCheckpoints > 0 ? (float)checkpointsReached / numberOfCheckpoints : 0f;
+        string progressKey = $"Level{currentSceneIndex}_Progress";
+        float prevProgress = PlayerPrefs.GetFloat(progressKey, 0f);
+        if (progress > prevProgress)
+        {
+            PlayerPrefs.SetFloat(progressKey, progress);
+            Debug.Log($"Updated stored progress for Level {currentSceneIndex}: {prevProgress} -> {progress}");
+        }
 
-        // Unlock level berikutnya
+        // Unlock level berikutnya (set unlock flag)
         int nextLevel = currentSceneIndex + 1;
         PlayerPrefs.SetInt($"Level{nextLevel}_Unlocked", 1);
 
@@ -136,7 +142,7 @@ public class GameManager : MonoBehaviour
         // Pastikan perubahan tersimpan
         PlayerPrefs.Save();
 
-        Debug.Log($"Level {currentSceneIndex} selesai - Progress: {progress}, Unlocking Level {nextLevel}");
+        Debug.Log($"Level {currentSceneIndex} selesai - Progress: {progress}, previous: {prevProgress}, Unlocking Level {nextLevel}");
 
         uiManager = uiManager ?? FindFirstObjectByType<UIManager>();
         uiManager?.Finish();
