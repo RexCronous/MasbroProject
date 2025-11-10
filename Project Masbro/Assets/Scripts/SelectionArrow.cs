@@ -66,7 +66,6 @@ public class SelectionArrow : MonoBehaviour
 
         await Task.Delay(400);
         // Tambahkan aksi sesuai menu yang dipilih
-        Debug.Log($"Selected option index: {currentPosition}");
         options[currentPosition].GetComponent<Button>().onClick.Invoke();
     }
 

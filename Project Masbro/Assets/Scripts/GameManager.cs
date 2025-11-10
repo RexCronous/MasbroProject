@@ -122,7 +122,6 @@ public class GameManager : MonoBehaviour
         if (progress > prevProgress)
         {
             PlayerPrefs.SetFloat(progressKey, progress);
-            Debug.Log($"Updated stored progress for Level {currentSceneIndex}: {prevProgress} -> {progress}");
         }
 
         // Unlock level berikutnya (set unlock flag)
@@ -141,7 +140,6 @@ public class GameManager : MonoBehaviour
         // Pastikan perubahan tersimpan
         PlayerPrefs.Save();
 
-        Debug.Log($"Level {currentSceneIndex} selesai - Progress: {progress}, previous: {prevProgress}, Unlocking Level {nextLevel}");
 
         uiManager = uiManager ?? FindFirstObjectByType<UIManager>();
         uiManager?.Finish();

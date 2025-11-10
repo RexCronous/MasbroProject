@@ -368,6 +368,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2009353504727915147, guid: b5e831ccf7b23724a851bded931e2d57, type: 3}
+      propertyPath: mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: e245edc216d224f8f89c883d43272c4b, type: 2}
+    - target: {fileID: 2009353504727915147, guid: b5e831ccf7b23724a851bded931e2d57, type: 3}
       propertyPath: musicIdle
       value: 
       objectReference: {fileID: 8300000, guid: 730e19d50c3ac4082918be9a3c88fca2, type: 3}
@@ -697,10 +701,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 164864921}
   m_HandleRect: {fileID: 1650710367}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.525
+  m_Value: 0.687
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2074,7 +2078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3ae2bc153b44775bf9893ffdc127c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myMixer: {fileID: 24100000, guid: e245edc216d224f8f89c883d43272c4b, type: 2}
+  mixer: {fileID: 24100000, guid: e245edc216d224f8f89c883d43272c4b, type: 2}
   musicSlider: {fileID: 2044846293}
   sfxSlider: {fileID: 665867228}
 --- !u!114 &1670568905

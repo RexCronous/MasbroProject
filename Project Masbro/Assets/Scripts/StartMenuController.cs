@@ -16,18 +16,10 @@ public class StartMenuController : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
         FindObjectOfType<VolumeSettings>()?.LoadVolume();
-        if (audioManager == null)
-        {
-            Debug.LogError("AudioManager tidak ditemukan di scene!");
-        }
 
         if (SettingsPanel != null)
         {
             SettingsPanel.SetActive(false);
-        }
-        else
-        {
-            Debug.LogWarning("Settings Panel is not assigned in StartMenuController!");
         }
     }
 
@@ -35,7 +27,6 @@ public class StartMenuController : MonoBehaviour
     {
         if (isTranstioning)
         {
-            Debug.LogWarning("Transisi sudah berjalan");
             return;
         }
         isTranstioning = true;
@@ -66,7 +57,6 @@ public class StartMenuController : MonoBehaviour
     {
         if (isTranstioning)
         {
-            Debug.LogWarning("Transisi sudah berjalan");
             return;
         }
         isTranstioning = true;
@@ -91,7 +81,6 @@ public class StartMenuController : MonoBehaviour
 
     public void OnBackClick()
     {
-        Debug.Log("back");
         if (audioManager != null && audioManager.interactItemGameOverMenu != null)
         {
             audioManager.PlaySfx(audioManager.interactItemGameOverMenu);

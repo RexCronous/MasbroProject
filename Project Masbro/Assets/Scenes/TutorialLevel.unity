@@ -211,6 +211,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5837726571699367086, guid: 04358331f00240646adcb236d476ec2e, type: 3}
+      propertyPath: mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: e245edc216d224f8f89c883d43272c4b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -269,7 +273,6 @@ MonoBehaviour:
   numberOfCheckpoints: 0
   elapsedTime: 0
   fastestTime: 0
-  atTutorial: 0
 --- !u!1 &144327214
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,6 +389,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2009353504727915147, guid: b5e831ccf7b23724a851bded931e2d57, type: 3}
+      propertyPath: mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: e245edc216d224f8f89c883d43272c4b, type: 2}
     - target: {fileID: 2131392171730729881, guid: b5e831ccf7b23724a851bded931e2d57, type: 3}
       propertyPath: m_Name
       value: AudioManager
@@ -13930,7 +13937,6 @@ MonoBehaviour:
   checkpoint:
   - {fileID: 858296924972387051}
   index: 0
-  previousIndex: -1
 --- !u!4 &2098332758
 Transform:
   m_ObjectHideFlags: 0

@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int jumpCount = 0;
     // private bool runBeforeJump = false;
     [SerializeField] private bool isGrounded = false;
-        private bool wasGrounded = false;
+    private bool wasGrounded = false;
     AudioManager audioManager;
     private float nextFootstepTime = 0f;
     private bool lastFacingRight;
@@ -71,14 +71,10 @@ public class PlayerController : MonoBehaviour
         bool jumpPressed = Input.GetButtonDown("Jump");
         bool inputLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
         bool inputRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
-        
+
         // Ground Checking
         wasGrounded = isGrounded;
         isGrounded = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer);
-        // if (!isGrounded && jumpCount > 0) print("not grounded");
-
-        // bool isRunning = Input.GetAxis("Run") > 0;
-        // bool isCrouching = Input.GetKey(KeyCode.C);
 
         // Double Jump Logic
         if (isGrounded && !wasGrounded)

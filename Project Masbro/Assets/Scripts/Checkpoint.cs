@@ -28,7 +28,7 @@ public class Checkpoint : MonoBehaviour
             {
                 audioManager.PlaySfx(audioManager.checkPoint);
             }
-            
+
             spawnSystem = FindFirstObjectByType<SpawnSystem>();
             for (int i = 0; i < spawnSystem.checkpoint.Length; i++)
             {
@@ -82,7 +82,6 @@ public class Checkpoint : MonoBehaviour
 
     private void OnColliderStateChanged(ColliderState fromState, ColliderState toState)
     {
-        Debug.Log($"Checkpoint state changed from {fromState} to {toState}");
 
         switch (toState)
         {

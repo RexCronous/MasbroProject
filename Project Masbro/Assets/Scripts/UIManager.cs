@@ -27,18 +27,9 @@ public class UIManager : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
         FindObjectOfType<VolumeSettings>()?.LoadVolume();
-        if (audioManager == null)
-        {
-            Debug.LogError("AudioManager tidak ditemukan di scene!");
-        }
-
         if (SettingsPanel != null)
         {
             SettingsPanel.SetActive(false);
-        }
-        else
-        {
-            Debug.LogWarning("Settings Panel is not assigned in StartMenuController!");
         }
     }
     private void Awake()
@@ -60,10 +51,6 @@ public class UIManager : MonoBehaviour
         if (gameOverScreen != null)
         {
             gameOverScreen.SetActive(true);
-        }
-        else
-        {
-            Debug.LogWarning("GameOverSound belum diisi di Inspector!");
         }
 
     }
@@ -181,7 +168,6 @@ public class UIManager : MonoBehaviour
 
     public void OnBackClick()
     {
-        Debug.Log("back");
         if (audioManager != null && audioManager.interactItemGameOverMenu != null)
         {
             audioManager.PlaySfx(audioManager.interactItemGameOverMenu);

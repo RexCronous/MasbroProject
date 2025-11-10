@@ -29,10 +29,6 @@ public class SelectLevelController : MonoBehaviour
         }
 
         audioManager = FindObjectOfType<AudioManager>();
-        if (audioManager == null)
-        {
-            Debug.LogError("AudioManager tidak ditemukan di scene!");
-        }
 
         if (levelButtons != null && levelButtons.Length > 0)
         {
@@ -48,14 +44,9 @@ public class SelectLevelController : MonoBehaviour
                         bool isUnlocked = (levelNum == 1) || (PlayerPrefs.GetInt($"Level{levelNum}_Unlocked", 0) == 1);
                         btn.interactable = isUnlocked;
 
-                        Debug.Log($"Level {levelNum} - Unlock Status: {isUnlocked}");
                     }
                 }
             }
-        }
-        else
-        {
-            Debug.LogWarning("Level buttons array is empty or not assigned in SelectLevelController!");
         }
 
         confirmPanel.SetActive(false);
@@ -100,8 +91,6 @@ public class SelectLevelController : MonoBehaviour
             // Pastikan perubahan tersimpan
             PlayerPrefs.Save();
 
-            Debug.Log("Semua progress level telah direset");
-
             // Reload scene
             SceneManager.LoadScene("Scenes/SelectLevel");
         }
@@ -125,7 +114,6 @@ public class SelectLevelController : MonoBehaviour
     {
         if (isTranstioning)
         {
-            Debug.LogWarning("Transisi sudah berjalan");
             return;
         }
         isTranstioning = true;

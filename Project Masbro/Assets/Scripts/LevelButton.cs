@@ -24,7 +24,6 @@ public class LevelButton : MonoBehaviour
             if (int.TryParse(levelNumber, out int parsedID))
             {
                 levelID = parsedID;
-                Debug.Log($"Level ID terdeteksi: {levelID} dari {levelName}");
             }
         }
 
@@ -33,7 +32,6 @@ public class LevelButton : MonoBehaviour
         // Pastikan Level ID valid
         if (levelID <= 0)
         {
-            Debug.LogError($"Gagal mendeteksi Level ID dari {gameObject.name}. Pastikan nama GameObject adalah 'Level1', 'Level2', dst.");
             levelID = 1;
         }
 
@@ -56,10 +54,6 @@ public class LevelButton : MonoBehaviour
     {
 
         audioManager = FindObjectOfType<AudioManager>();
-        if (audioManager == null)
-        {
-            Debug.LogError("AudioManager tidak ditemukan di scene!");
-        }
         // Set button click listener
         if (button != null)
             button.onClick.AddListener(OnLevelButtonClick);
@@ -73,9 +67,7 @@ public class LevelButton : MonoBehaviour
         string unlockKey = $"Level{levelID}_Unlocked";
         string progressKey = $"Level{levelID}_Progress";
 
-        // Debug info
-        Debug.Log($"Checking level {levelID} - Unlock key: {unlockKey}");
-        Debug.Log($"Current unlock status: {PlayerPrefs.GetInt(unlockKey, 0)}");
+
 
         // Level 1 selalu terbuka
         bool isUnlocked = (levelID == 1);
@@ -83,7 +75,6 @@ public class LevelButton : MonoBehaviour
         if (!isUnlocked) // Untuk level > 1
         {
             isUnlocked = PlayerPrefs.GetInt(unlockKey, 0) == 1;
-            Debug.Log($"Level {levelID} unlock status: {isUnlocked}");
         }
 
         // Do not write PlayerPrefs here. SelectLevelController is responsible for
@@ -92,21 +83,15 @@ public class LevelButton : MonoBehaviour
 
         // Ambil progress bintang
         float progress = PlayerPrefs.GetFloat(progressKey, 0f);
-        Debug.Log($"Level {levelID} progress: {progress}");
-
-        // Update UI dengan debug info
-        Debug.Log($"Level {levelID} - Updating UI - Unlocked: {isUnlocked}");
 
         if (lockIcon != null)
         {
             lockIcon.SetActive(!isUnlocked);
-            Debug.Log($"Level {levelID} - Lock Icon Active: {!isUnlocked}");
         }
 
         if (button != null)
         {
             button.interactable = isUnlocked;
-            Debug.Log($"Level {levelID} - Button Interactable: {isUnlocked}");
         }
 
         if (starBar != null)
@@ -125,7 +110,6 @@ public class LevelButton : MonoBehaviour
             audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
         }
         StartCoroutine(FadeOutAndLoadScene(levelID));
-        Debug.Log($"Loading scene: Scenes/Level {levelID}");
     }
 
     private IEnumerator FadeOutAndLoadScene(int sceneIndex)
@@ -135,27 +119,6 @@ public class LevelButton : MonoBehaviour
         SceneManager.LoadScene(sceneIndex);
         yield break;
     }
-
-    // // Dipanggil ketika level selesai untuk update progress
-    // public void UpdateProgress(float progress)
-    // {
-    //     if (starBar == null) return;
-
-    //     string progressKey = $"Level{levelID}_Progress";
-    //     float prev = PlayerPrefs.GetFloat(progressKey, 0f);
-
-    //     // Simpan hanya jika progress baru lebih besar dari yang tersimpan
-    //     float toStore = Mathf.Max(prev, progress);
-    //     if (toStore > prev)
-    //     {
-    //         PlayerPrefs.SetFloat(progressKey, toStore);
-    //         PlayerPrefs.Save();
-    //         Debug.Log($"Level {levelID} progress updated: {prev} -> {toStore}");
-    //     }
-
-    //     // Pastikan UI menampilkan nilai maksimum
-    //     starBar.fillAmount = Mathf.Max(starBar.fillAmount, toStore);
-    // }
 
     // Dipanggil untuk membuka level berikutnya
     public void UnlockLevel()
