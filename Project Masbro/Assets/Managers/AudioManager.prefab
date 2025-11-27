@@ -305,6 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b8b80b4d5bf34fc99f1e86afc4f8edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: e245edc216d224f8f89c883d43272c4b, type: 2}
   musicSource: {fileID: 7765722576102919734}
   sfxSource: {fileID: 3024404979169917219}
   footstepSource: {fileID: 2901948562590792747}
@@ -327,7 +328,6 @@ MonoBehaviour:
   closedPause: {fileID: 8300000, guid: 5cefb3f0d367b43faae6dcf33c714cd1, type: 3}
   finished: {fileID: 8300000, guid: 559891d4e833c4746b4e190f400a5ad7, type: 3}
   walkPitch: 1
-  fadeDuration: 0
 --- !u!1 &8786467542095367850
 GameObject:
   m_ObjectHideFlags: 0
