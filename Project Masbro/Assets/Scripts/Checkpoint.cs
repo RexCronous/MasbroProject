@@ -21,7 +21,6 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // print("colliderState: " + this.colliderState);
         if (other.gameObject.CompareTag("Player"))
         {
             if (audioManager != null && this.colliderState != ColliderState.Active)
@@ -63,7 +62,6 @@ public class Checkpoint : MonoBehaviour
                 if (spawnSystem.checkpoint[i] == this.gameObject)
                 {
                     checkpointIndex = i;
-                    // print("Checkpoint Index: " + checkpointIndex);
                     break;
                 }
             }

@@ -30,7 +30,6 @@ public class StartMenuController : MonoBehaviour
             return;
         }
         isTranstioning = true;
-        print("start");
         if (audioManager != null && audioManager.interactItemGameOverMenu != null)
         {
             audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
@@ -60,7 +59,6 @@ public class StartMenuController : MonoBehaviour
             return;
         }
         isTranstioning = true;
-        print("exit");
         Application.Quit();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
@@ -70,7 +68,6 @@ public class StartMenuController : MonoBehaviour
 
     public void OnSettingClick()
     {
-        print("setting");
         if (audioManager != null && audioManager.interactItemGameOverMenu != null)
         {
             audioManager.PlaySfx(audioManager.interactItemGameOverMenu);

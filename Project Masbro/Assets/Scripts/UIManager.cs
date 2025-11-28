@@ -157,7 +157,6 @@ public class UIManager : MonoBehaviour
 
     public void OnSettingClick()
     {
-        print("setting");
         // if (audioManager != null && audioManager.interactItemGameOverMenu != null)
         // {
         //     audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
