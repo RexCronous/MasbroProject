@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     [Header("Animation & Feedback")]
     [SerializeField] private Animator animator;
     public ParticleSystem SmokeFX;
+    public ParticleSystem DeathFX;
 
     private Rigidbody2D rb;
     private CapsuleCollider2D capsuleCollider;
