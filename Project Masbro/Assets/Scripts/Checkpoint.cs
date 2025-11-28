@@ -7,6 +7,7 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] private Sprite activatedSprite; // New sprite when checkpoint is activated
     [SerializeField] private int checkpointIndex; // Index of this checkpoint
     [SerializeField] private bool hasActivated = false;
+    [SerializeField] public ParticleSystem activeFX;
     public enum ColliderState
     {
         Unclaimed,
@@ -27,7 +28,6 @@ public class Checkpoint : MonoBehaviour
             {
                 audioManager.PlaySfx(audioManager.checkPoint);
             }
-
             spawnSystem = FindFirstObjectByType<SpawnSystem>();
             for (int i = 0; i < spawnSystem.checkpoint.Length; i++)
             {
@@ -92,6 +92,7 @@ public class Checkpoint : MonoBehaviour
                 break;
             case ColliderState.Active:
                 // handle active state
+                activeFX.Play();
                 altarItemRenderer.sprite = activatedSprite;
                 break;
         }
