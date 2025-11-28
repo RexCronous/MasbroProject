@@ -3409,12 +3409,7 @@ MonoBehaviour:
   mainPanel: {fileID: 1149227747}
   confirmPanel: {fileID: 319057190}
   tutorialPanel: {fileID: 80338959}
-  levelButtons:
-  - {fileID: 1626331042}
-  - {fileID: 995212090}
-  - {fileID: 967650166}
-  - {fileID: 1520848858}
-  - {fileID: 390227001}
+  levelButtons: []
 --- !u!1 &1500446648
 GameObject:
   m_ObjectHideFlags: 0

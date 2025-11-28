@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject SettingsPanel;
 
     private AudioManager audioManager;
+    private bool canPause = true;
 
     [System.Obsolete]
     private void Start()
@@ -31,6 +32,8 @@ public class UIManager : MonoBehaviour
         {
             SettingsPanel.SetActive(false);
         }
+
+        canPause = true;
     }
     private void Awake()
     {
@@ -44,6 +47,8 @@ public class UIManager : MonoBehaviour
     #region  Game Over
     public void GameOver()
     {
+        canPause = false;
+
         if (audioManager != null && audioManager.gameOver != null)
         {
             audioManager.PlaySfx(audioManager.gameOver);
@@ -57,6 +62,8 @@ public class UIManager : MonoBehaviour
 
     public void Finish()
     {
+        canPause = false;
+
         if (finishScreen != null && audioManager != null && audioManager.finished != null)
         {
             Time.timeScale = 0;
@@ -123,7 +130,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && canPause)
         {
             if (pauseScreen.activeInHierarchy)
             {

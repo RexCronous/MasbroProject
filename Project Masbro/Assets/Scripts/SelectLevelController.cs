@@ -15,11 +15,13 @@ public class SelectLevelController : MonoBehaviour
 
     private int levelUnlocked;
     private bool isTranstioning;
+    private int lastLevelIndex;
 
     [System.Obsolete]
 
     private void Start()
     {
+        lastLevelIndex = SceneManager.sceneCountInBuildSettings - 2;
 
         // Ensure default unlock(s) are initialized in one place (menu)
         if (!PlayerPrefs.HasKey("Level1_Unlocked"))
@@ -30,24 +32,24 @@ public class SelectLevelController : MonoBehaviour
 
         audioManager = FindObjectOfType<AudioManager>();
 
-        if (levelButtons != null && levelButtons.Length > 0)
-        {
-            // Check setiap level button
-            for (int i = 0; i < levelButtons.Length; i++)
-            {
-                int levelNum = i + 1;
-                if (levelButtons[i] != null)
-                {
-                    Button btn = levelButtons[i].GetComponent<Button>();
-                    if (btn != null)
-                    {
-                        bool isUnlocked = (levelNum == 1) || (PlayerPrefs.GetInt($"Level{levelNum}_Unlocked", 0) == 1);
-                        btn.interactable = isUnlocked;
+        // if (levelButtons != null && levelButtons.Length > 0)
+        // {
+        //     // Check setiap level button
+        //     for (int i = 0; i < levelButtons.Length; i++)
+        //     {
+        //         int levelNum = i + 1;
+        //         if (levelButtons[i] != null)
+        //         {
+        //             Button btn = levelButtons[i].GetComponent<Button>();
+        //             if (btn != null)
+        //             {
+        //                 bool isUnlocked = (levelNum == 1) || (PlayerPrefs.GetInt($"Level{levelNum}_Unlocked", 0) == 1);
+        //                 btn.interactable = isUnlocked;
 
-                    }
-                }
-            }
-        }
+        //             }
+        //         }
+        //     }
+        // }
 
         confirmPanel.SetActive(false);
         tutorialPanel.SetActive(false);
@@ -67,7 +69,7 @@ public class SelectLevelController : MonoBehaviour
         if (panel == confirmPanel)
         {
             // Reset semua progress
-            for (int i = 1; i <= levelButtons.Length; i++)
+            for (int i = 1; i <= lastLevelIndex; i++)
             {
                 // Hapus status unlock level (kecuali level 1)
                 if (i > 1)
