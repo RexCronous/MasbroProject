@@ -169,11 +169,14 @@ public class UIManager : MonoBehaviour
         //     audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
         // }
         // Time.timeScale = 1f;
+        canPause = false;
         SettingsPanel.SetActive(true);
     }
 
     public void OnBackClick()
     {
+        canPause = true;
+        
         if (audioManager != null && audioManager.interactItemGameOverMenu != null)
         {
             audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
