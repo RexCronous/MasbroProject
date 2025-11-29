@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using System.Threading.Tasks;
 
 
 public class SelectionArrow : MonoBehaviour
@@ -30,8 +29,7 @@ public class SelectionArrow : MonoBehaviour
         // Konfirmasi (misalnya tombol Enter / Space)
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
         {
-
-            Interact();
+            StartCoroutine(Interact());
         }
 
     }
@@ -56,7 +54,7 @@ public class SelectionArrow : MonoBehaviour
         rect.position = new Vector3(rect.position.x, options[currentPosition].position.y, rect.position.z);
     }
 
-    private async void Interact()
+    private IEnumerator Interact()
     {
         // not work yet
         if (audioManager != null && audioManager.interactItemGameOverMenu != null)
@@ -64,7 +62,7 @@ public class SelectionArrow : MonoBehaviour
             audioManager.PlaySfx(audioManager.interactItemGameOverMenu);
         }
 
-        await Task.Delay(400);
+        yield return new WaitForSecondsRealtime(0.4f);
         // Tambahkan aksi sesuai menu yang dipilih
         options[currentPosition].GetComponent<Button>().onClick.Invoke();
     }

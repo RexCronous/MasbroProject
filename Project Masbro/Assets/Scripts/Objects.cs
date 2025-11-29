@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using System.Collections;
 using UnityEngine;
 
 public class Objects : MonoBehaviour
@@ -26,17 +26,17 @@ public class Objects : MonoBehaviour
                 ParticleSystem deathObject = Instantiate(deathFx, other.transform.position, Quaternion.identity);
                 
                 Destroy(other.gameObject);
-                GameManager.Instance.Respawn();
-                GameManager.Instance.isHit = true;
+                GameManager.Instance.OnPlayerDeath();
                 
-                DestroyAfterDelay(deathObject.gameObject, 1000);
+                StartCoroutine(DestroyAfterDelay(deathObject.gameObject, 1));
             }
         }
     }
 
-    private async void DestroyAfterDelay(GameObject obj, int delay)
+    private IEnumerator DestroyAfterDelay(GameObject obj, int delay)
     {
-        await Task.Delay(delay);
+        yield return new WaitForSeconds(delay);
+
         Destroy(obj);
     }
 }

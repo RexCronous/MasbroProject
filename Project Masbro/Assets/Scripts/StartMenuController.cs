@@ -6,16 +6,24 @@ public class StartMenuController : MonoBehaviour
 {
     [Header("Panels")]
     [SerializeField] private GameObject SettingsPanel;
+    [SerializeField] private VolumeSettings volumeSettings; // Assign dari inspector
 
     private bool isTranstioning = false;
 
     private AudioManager audioManager;
 
-    [System.Obsolete]
+    private void Awake()
+    {
+        audioManager = FindFirstObjectByType<AudioManager>();
+    }
+
+    // [System.Obsolete]
     private void Start()
     {
-        audioManager = FindObjectOfType<AudioManager>();
-        FindObjectOfType<VolumeSettings>()?.LoadVolume();
+        if (audioManager == null)
+            audioManager = FindFirstObjectByType<AudioManager>();
+        
+        volumeSettings?.LoadVolume();
 
         if (SettingsPanel != null)
         {

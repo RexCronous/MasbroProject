@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -145,9 +145,15 @@ public class GameManager : MonoBehaviour
         uiManager?.Finish();
     }
 
-    public async void Respawn()
+    public void OnPlayerDeath()
     {
-        await Task.Delay(respawnDelay * 1000); // Convert seconds to milliseconds
+        StartCoroutine(Respawn());
+        isHit = true;
+    }
+
+    private IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(1f);
 
         if (lives > 1)
         {
